@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/rent/info")
 @Tag(name = "Аренда фильмов",
-     description = "Контроллер для работы с арендой/выдачей фильмов пользователям онлайн кинотеатра")
+     description = "Контроллер для работы с арендой/покупкой фильмов пользователями онлайн кинотеатра")
 public class RentFilmController
       extends GenericController<FilmRentInfo> {
     

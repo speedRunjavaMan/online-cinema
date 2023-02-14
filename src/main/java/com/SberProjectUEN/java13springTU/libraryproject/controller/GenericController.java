@@ -62,9 +62,7 @@ public abstract class GenericController<T extends GenericModel> {
         updatedEntity.setId(id);
         return ResponseEntity.status(HttpStatus.CREATED).body(genericRepository.save(updatedEntity));
     }
-    
-    //@RequestParam: localhost:9090/api/rest/books/deleteBook?id=1
-    //@PathVariable: localhost:9090/api/rest/books/deleteBook/1
+
     @Operation(description = "Удалить запись по ID", method = "delete")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     public void delete(@PathVariable(value = "id") Long id) {
