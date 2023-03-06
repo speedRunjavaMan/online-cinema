@@ -16,7 +16,7 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@SequenceGenerator(name = "default_gen", sequenceName = "users_seq", allocationSize = 1)
+@SequenceGenerator(name = "default_gen", sequenceName = "users_seq", allocationSize = 1, initialValue = 1)
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "id")
 public class User
         extends GenericModel {
@@ -51,11 +51,11 @@ public class User
     @Column(name = "createdWhen", nullable = false)
     private LocalDateTime createdWhen;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "role_id", nullable = false,
             foreignKey = @ForeignKey(name = "FK_USER_ROLES"))
-    private Role roles;
+    private Role role;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Set<FilmRentInfo> filmRentInfos;
 }

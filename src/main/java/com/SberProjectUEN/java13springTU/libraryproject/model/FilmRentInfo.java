@@ -19,11 +19,11 @@ import java.time.LocalDateTime;
 public class FilmRentInfo
         extends GenericModel {
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "orders_id", foreignKey = @ForeignKey(name = "FK_ORDERS_FILM"))
     private Film film;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "FK_ORDERS_USER"))
     private User user;
 
@@ -35,6 +35,4 @@ public class FilmRentInfo
     //rent_period - количество дней аренды, если не указано, то по-умолчанию - 14 дней
     @Column(name = "purchase")
     private Boolean purchase;
-
-
 }
