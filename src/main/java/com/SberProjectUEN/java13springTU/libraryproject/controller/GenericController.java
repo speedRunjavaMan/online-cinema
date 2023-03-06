@@ -1,13 +1,14 @@
 package com.SberProjectUEN.java13springTU.libraryproject.controller;
 
+
+import com.SberProjectUEN.java13springTU.libraryproject.dto.GenericDTO;
 import com.SberProjectUEN.java13springTU.libraryproject.model.GenericModel;
-import com.SberProjectUEN.java13springTU.libraryproject.repository.GenericRepository;
+import com.SberProjectUEN.java13springTU.libraryproject.service.GenericService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.webjars.NotFoundException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,58 +18,64 @@ import java.util.List;
  * который реализует все EndPoint`ы для crud операций используя абстрактный репозиторий
  *
  * @param <T> - Сущность с которой работает контроллер
+ * @param <N> - DTO с которой работает контроллер
  */
 @RestController
-public abstract class GenericController<T extends GenericModel> {
-    
-    private final GenericRepository<T> genericRepository;
-    
+public abstract class GenericController<T extends GenericModel, N extends GenericDTO> {
+
+    // protected final GenericRepository<T> genericRepository;
+    private GenericService<T, N> service;
+
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
-    public GenericController(GenericRepository<T> genericRepository) {
-        this.genericRepository = genericRepository;
+    public GenericController(//GenericRepository<T> genericRepository,
+                             GenericService<T, N> service) {
+        //this.genericRepository = genericRepository;
+        this.service = service;
     }
-    
+
     //вернуть информацию о книге по переданному ID
     @Operation(description = "Получить запись по ID", method = "getOneById")
     @RequestMapping(value = "/getOneById", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<T> getOneById(@RequestParam(value = "id") Long id) {
+    public ResponseEntity<N> getOneById(@RequestParam(value = "id") Long id) {
         return ResponseEntity.status(HttpStatus.OK)
-              .body(genericRepository.findById(id).orElseThrow(() -> new NotFoundException("Данных с переданным ID не найдено")));
-    }
-    
-    @Operation(description = "Получить все записи", method = "getAll")
-    @RequestMapping(value = "/getAll", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<T>> getAll() {
-        return ResponseEntity.status(HttpStatus.OK).body(genericRepository.findAll());
-    }
-    
-    @Operation(description = "Создать новую запись", method = "create")
-    @RequestMapping(value = "/add", method = RequestMethod.POST,
-                    produces = MediaType.APPLICATION_JSON_VALUE,
-                    consumes = MediaType.APPLICATION_JSON_VALUE)
-    
-    public ResponseEntity<T> create(@RequestBody T newEntity) {
-        newEntity.setCreatedWhen(LocalDateTime.now());
-        genericRepository.save(newEntity);
-        return ResponseEntity.status(HttpStatus.CREATED).body(newEntity);
-    }
-    
-    @Operation(description = "Обновить запись", method = "update")
-    @RequestMapping(value = "/update", method = RequestMethod.PUT,
-                    produces = MediaType.APPLICATION_JSON_VALUE,
-                    consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<T> update(@RequestBody T updatedEntity,
-                                    @RequestParam(value = "id") Long id) {
-        updatedEntity.setId(id);
-        return ResponseEntity.status(HttpStatus.CREATED).body(genericRepository.save(updatedEntity));
+                // .body(genericRepository.findById(id).orElseThrow(() -> new NotFoundException("Данных с переданным ID не найдено")));
+                .body(service.getOne(id));
     }
 
+    @Operation(description = "Получить все записи", method = "getAll")
+    @RequestMapping(value = "/getAll", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<N>> getAll() {
+        return ResponseEntity.status(HttpStatus.OK).body(service.listAll());
+    }
+
+    @Operation(description = "Создать новую запись", method = "create")
+    @RequestMapping(value = "/add", method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+
+    public ResponseEntity<N> create(@RequestBody N newEntity) {
+        newEntity.setCreatedWhen(LocalDateTime.now());
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.create(newEntity));
+    }
+
+    @Operation(description = "Обновить запись", method = "update")
+    @RequestMapping(value = "/update", method = RequestMethod.PUT,
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<N> update(@RequestBody N updatedEntity,
+                                    @RequestParam(value = "id") Long id) {
+        updatedEntity.setId(id);
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.update(updatedEntity));
+    }
+
+    //@RequestParam: localhost:9090/api/rest/books/deleteBook?id=1
+    //@PathVariable: localhost:9090/api/rest/books/deleteBook/1
     @Operation(description = "Удалить запись по ID", method = "delete")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     public void delete(@PathVariable(value = "id") Long id) {
-        genericRepository.deleteById(id);
+        service.delete(id);
     }
-    
+
     /*
     TODO:
      1) https://habr.com/ru/post/483202/ - что такое REST и RESTFul + HTTP
@@ -86,3 +93,4 @@ public abstract class GenericController<T extends GenericModel> {
         https://www.baeldung.com/java-14-serial-annotation
      */
 }
+

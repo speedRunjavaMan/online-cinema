@@ -21,16 +21,16 @@ import java.util.Set;
 public class Director
         extends GenericModel {
     @Column(name = "directors_fio", nullable = false)
-    private String authorFio;
+    private String directorsFio;
 
     @Column(name = "position")
-    private String description;
+    private String position;
 
 //    @ManyToMany(mappedBy = "directors")
 //    private Set<Film> films;
 
     //чтобы не было главной/не главной таблицы
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     //@JsonIgnore //убирает рекурсию
     //@JsonManagedReference //убирает рекурсию в связке с JsonBackReference, но не будет работать десериализация
     @JoinTable(
