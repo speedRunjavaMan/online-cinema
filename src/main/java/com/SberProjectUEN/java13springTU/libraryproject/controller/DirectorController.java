@@ -16,10 +16,8 @@ public class DirectorController
       extends GenericController<Director, DirectorDTO> {
 
 
-        private DirectorService directorService;
     public DirectorController(DirectorService directorService) {
             super(directorService);
-            this.directorService = directorService;
         }
 
     

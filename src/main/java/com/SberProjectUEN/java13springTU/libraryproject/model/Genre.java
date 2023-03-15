@@ -4,8 +4,9 @@ public enum Genre {
     FANTASY("Фантастика"),
     HORROR("Ужасы"),
     DRAMA("Драма"),
-    COMEDY("Комедия");
-    
+    COMEDY("Комедия"),
+    THRILLER("Триллер");
+
     private final String genreTextDisplay;
     
     Genre(String text) {

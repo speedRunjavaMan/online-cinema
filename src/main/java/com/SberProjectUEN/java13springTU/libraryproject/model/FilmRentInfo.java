@@ -3,6 +3,7 @@ package com.SberProjectUEN.java13springTU.libraryproject.model;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,13 +15,14 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @SequenceGenerator(name = "default_gen", sequenceName = "orders_seq", allocationSize = 1)
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "id")
 public class FilmRentInfo
         extends GenericModel {
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinColumn(name = "orders_id", foreignKey = @ForeignKey(name = "FK_ORDERS_FILM"))
+    @JoinColumn(name = "film_id", foreignKey = @ForeignKey(name = "FK_ORDERS_FILM"))
     private Film film;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
@@ -31,7 +33,7 @@ public class FilmRentInfo
     private LocalDateTime rentDate;
     //поле автоматически должно рассчитываться из rent_date + rent_period
     @Column(name = "rentPeriod", nullable = false)
-    private LocalDateTime rentPeriod;
+    private Integer rentPeriod;
     //rent_period - количество дней аренды, если не указано, то по-умолчанию - 14 дней
     @Column(name = "purchase")
     private Boolean purchase;
