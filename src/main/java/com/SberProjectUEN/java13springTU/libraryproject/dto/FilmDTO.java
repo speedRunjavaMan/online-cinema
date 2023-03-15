@@ -17,6 +17,7 @@ public class FilmDTO
   private String country;
   private Genre genre;
 
+
   public Set<Long> getDirectorsIds() {
     return directorsIds;
   }

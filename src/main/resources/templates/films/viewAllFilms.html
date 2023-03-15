@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Фильмы онлайн кинотеатра</title>
+</head>
+<body>
+<div layout:fragment="content">
+  <h1>Все фильмы онлайн кинотеатра</h1>
+  <div class="row">
+    <div class="col">
+      <a href="films/add"
+         class="btn btn-secondary"
+         role="button"
+         style="float: right"
+         aria-disabled="true">Добавить фильм</a>
+    </div>
+  </div>
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th scope="col">Название</th>
+      <th scope="col">Жанр</th>
+      <th scope="col">Страна</th>
+      <th scope="col">Дата выхода</th>
+      <th scope="col">Режиссер(ы)</th>
+      <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="film : ${films}">
+      <td>
+        <a class="text-link text-blue" th:href="'/films/' + ${film.getId()}" th:text="${film.getFilmTitle()}"></a>
+      </td>
+      <td th:text="${film.getGenre().getGenreTextDisplay()}"></td>
+      <td th:text="${film.getCountry()}"></td>
+      <td th:text="${film.getPremierYear()}"></td>
+      <td>
+        <ul>
+          <li th:each="director : ${film.getDirectors()}" th:text="${director.getDirectorsFio()}"></li>
+        </ul>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+</html>

@@ -2,8 +2,6 @@ package com.SberProjectUEN.java13springTU.libraryproject.dto;
 
 import lombok.*;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Set;
 
 @Getter
@@ -17,11 +15,10 @@ public class UserDTO
     private String firstName;
     private String lastName;
     private String middleName;
-    private LocalDate birthDate;
+    private String birthDate;
     private String phone;
     private String address;
     private String email;
-    private LocalDateTime createdWhen;
     private RoleDTO role;
     private Set<Long> userFilmsRent;
 }
