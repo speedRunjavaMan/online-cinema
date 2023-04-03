@@ -35,6 +35,8 @@ public class FilmRentInfo
     @Column(name = "rentPeriod", nullable = false)
     private Integer rentPeriod;
     //rent_period - количество дней аренды, если не указано, то по-умолчанию - 14 дней
+    @Column(name = "returned", nullable = false)
+    private Boolean returned;
     @Column(name = "purchase")
     private Boolean purchase;
 }

@@ -1,4 +1,4 @@
-package com.SberProjectUEN.java13springTU.libraryproject.controller;
+package com.SberProjectUEN.java13springTU.libraryproject.REST.controller;
 
 import com.SberProjectUEN.java13springTU.libraryproject.dto.FilmDTO;
 import com.SberProjectUEN.java13springTU.libraryproject.model.Film;

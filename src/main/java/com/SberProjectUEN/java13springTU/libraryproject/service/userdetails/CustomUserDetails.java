@@ -1,6 +1,5 @@
 package com.SberProjectUEN.java13springTU.libraryproject.service.userdetails;
 
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

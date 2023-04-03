@@ -1,9 +1,11 @@
-package com.SberProjectUEN.java13springTU.libraryproject.controller;
+package com.SberProjectUEN.java13springTU.libraryproject.REST.controller;
 
 import com.SberProjectUEN.java13springTU.libraryproject.dto.DirectorDTO;
 import com.SberProjectUEN.java13springTU.libraryproject.model.Director;
 import com.SberProjectUEN.java13springTU.libraryproject.service.DirectorService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,14 +14,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/director")
 @Tag(name = "Режиссеры",
      description = "Контроллер для работы с режиссерами фильмов")
+@SecurityRequirement(name = "Bearer Authentication")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class DirectorController
       extends GenericController<Director, DirectorDTO> {
 
+    private DirectorService directorService;
+
 
     public DirectorController(DirectorService directorService) {
-            super(directorService);
-        }
-
+        super(directorService);
+        this.directorService = directorService;
+    }
     
 //    @Operation(description = "Добавить фильм к режиссеру", method = "addFilm")
 //    @RequestMapping(value = "/addFilm", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)

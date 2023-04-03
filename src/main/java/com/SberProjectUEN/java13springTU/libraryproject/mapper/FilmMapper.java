@@ -4,6 +4,7 @@ import com.SberProjectUEN.java13springTU.libraryproject.dto.FilmDTO;
 import com.SberProjectUEN.java13springTU.libraryproject.model.Film;
 import com.SberProjectUEN.java13springTU.libraryproject.model.GenericModel;
 import com.SberProjectUEN.java13springTU.libraryproject.repository.DirectorRepository;
+import com.SberProjectUEN.java13springTU.libraryproject.utils.DateFormatter;
 import jakarta.annotation.PostConstruct;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -30,7 +31,8 @@ public class FilmMapper
         modelMapper.createTypeMap(Film.class, FilmDTO.class)
               .addMappings(m -> m.skip(FilmDTO::setDirectorsIds)).setPostConverter(toDtoConverter());
         modelMapper.createTypeMap(FilmDTO.class, Film.class)
-              .addMappings(m -> m.skip(Film::setDirectors)).setPostConverter(toEntityConverter());
+              .addMappings(m -> m.skip(Film::setDirectors)).setPostConverter(toEntityConverter())
+              .addMappings(m -> m.skip(Film::setPremierYear)).setPostConverter(toEntityConverter());
     }
     
     @Override
@@ -41,6 +43,7 @@ public class FilmMapper
         else {
             destination.setDirectors(Collections.emptySet());
         }
+        destination.setPremierYear(DateFormatter.formatStringToDate(source.getPremierYear()));
     }
     
     @Override

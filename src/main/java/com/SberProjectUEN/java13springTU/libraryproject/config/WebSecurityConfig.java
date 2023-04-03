@@ -1,7 +1,7 @@
 package com.SberProjectUEN.java13springTU.libraryproject.config;
 
 
-import com.SberProjectUEN.java13springTU.libraryproject.service.userdetails.CustomUserDetails;
+
 import com.SberProjectUEN.java13springTU.libraryproject.service.userdetails.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -17,11 +17,11 @@ import org.springframework.security.web.firewall.StrictHttpFirewall;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import java.util.Arrays;
-import java.util.List;
+
 
 import static com.SberProjectUEN.java13springTU.libraryproject.constants.SecurityConstants.*;
-import static com.SberProjectUEN.java13springTU.libraryproject.constants.UserRolesConstants.ADMIN;
-import static com.SberProjectUEN.java13springTU.libraryproject.constants.UserRolesConstants.LIBRARIAN;
+import static com.SberProjectUEN.java13springTU.libraryproject.constants.UserRolesConstants.*;
+
 
 @Configuration
 @EnableWebSecurity
@@ -55,13 +55,16 @@ public class WebSecurityConfig {
                     .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                    )
               //Настройка http запросов - кому куда можно/нельзя
-              .authorizeHttpRequests((requests) -> requests
-                                           .requestMatchers(RESOURCES_WHITE_LIST.toArray(String[]::new)).permitAll()
-                                           .requestMatchers(BOOKS_WHITE_LIST.toArray(String[]::new)).permitAll()
-                                           .requestMatchers(USERS_WHITE_LIST.toArray(String[]::new)).permitAll()
-                                           .requestMatchers(BOOKS_PERMISSION_LIST.toArray(String[]::new)).hasAnyRole(ADMIN, LIBRARIAN)
-                                           .anyRequest().authenticated()
-                                    )
+                .authorizeHttpRequests((requests) -> requests
+                        .requestMatchers(RESOURCES_WHITE_LIST.toArray(String[]::new)).permitAll()
+                        .requestMatchers(FILMS_WHITE_LIST.toArray(String[]::new)).permitAll()
+                        .requestMatchers(DIRECTORS_WHITE_LIST.toArray(String[]::new)).permitAll()
+                        .requestMatchers(USERS_WHITE_LIST.toArray(String[]::new)).permitAll()
+                        .requestMatchers(FILMS_PERMISSION_LIST.toArray(String[]::new)).hasAnyRole(ADMIN, LIBRARIAN)
+                        .requestMatchers(DIRECTORS_PERMISSION_LIST.toArray(String[]::new)).hasAnyRole(ADMIN, LIBRARIAN)
+                        .requestMatchers(USERS_PERMISSION_LIST.toArray(String[]::new)).hasAnyRole(LIBRARIAN, USER)
+                        .anyRequest().authenticated()
+                )
               //Настройка для входа в систему
               .formLogin((form) -> form
                                .loginPage("/login")

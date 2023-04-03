@@ -11,8 +11,12 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+
 @Entity
-@Table(name = "users")
+@Table(name = "users",
+        uniqueConstraints = {@UniqueConstraint(name = "uniqueEmail", columnNames = "email"),
+                @UniqueConstraint(name = "uniqueLogin", columnNames = "login")})
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -36,7 +40,7 @@ public class User
     @Column(name = "middleName")
     private String middleName;
 
-    @Column(name = "birthDate", nullable = false)
+    @Column(name = "birth_date", nullable = false)
     private LocalDate birthDate;
 
     @Column(name = "phone")
@@ -51,7 +55,10 @@ public class User
     @Column(name = "createdWhen", nullable = false)
     private LocalDateTime createdWhen;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @Column(name = "change_password_token")
+    private String changePasswordToken;
+
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "role_id", nullable = false,
             foreignKey = @ForeignKey(name = "FK_USER_ROLES"))
     private Role role;

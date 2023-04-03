@@ -1,5 +1,6 @@
 package com.SberProjectUEN.java13springTU.libraryproject.mapper;
 
+
 import com.SberProjectUEN.java13springTU.libraryproject.dto.GenericDTO;
 import com.SberProjectUEN.java13springTU.libraryproject.model.GenericModel;
 import jakarta.annotation.PostConstruct;
@@ -21,12 +22,12 @@ import java.util.Set;
  */
 @Component
 public abstract class GenericMapper<E extends GenericModel, D extends GenericDTO>
-      implements Mapper<E, D> {
-    
+        implements Mapper<E, D> {
+
     protected final ModelMapper modelMapper;
     private final Class<E> entityClass;
     private final Class<D> dtoClass;
-    
+
     protected GenericMapper(ModelMapper mapper,
                             Class<E> entityClass,
                             Class<D> dtoClass) {
@@ -34,31 +35,31 @@ public abstract class GenericMapper<E extends GenericModel, D extends GenericDTO
         this.entityClass = entityClass;
         this.dtoClass = dtoClass;
     }
-    
+
     @Override
     public E toEntity(D dto) {
         return Objects.isNull(dto)
-               ? null
-               : modelMapper.map(dto, entityClass);
+                ? null
+                : modelMapper.map(dto, entityClass);
     }
-    
+
     @Override
     public List<E> toEntities(List<D> dtos) {
         return dtos.stream().map(this::toEntity).toList();
     }
-    
+
     @Override
-    public D toDto(E entity) {
+    public D toDTO(E entity) {
         return Objects.isNull(entity)
-               ? null
-               : modelMapper.map(entity, dtoClass);
+                ? null
+                : modelMapper.map(entity, dtoClass);
     }
-    
+
     @Override
     public List<D> toDTOs(List<E> entities) {
-        return entities.stream().map(this::toDto).toList();
+        return entities.stream().map(this::toDTO).toList();
     }
-    
+
     Converter<D, E> toEntityConverter() {
         return context -> {
             D source = context.getSource();
@@ -67,7 +68,7 @@ public abstract class GenericMapper<E extends GenericModel, D extends GenericDTO
             return context.getDestination();
         };
     }
-    
+
     Converter<E, D> toDtoConverter() {
         return context -> {
             E source = context.getSource();
@@ -76,13 +77,14 @@ public abstract class GenericMapper<E extends GenericModel, D extends GenericDTO
             return context.getDestination();
         };
     }
-    
+
     protected abstract void mapSpecificFields(D source, E destination);
-    
+
     protected abstract void mapSpecificFields(E source, D destination);
-    
+
     protected abstract Set<Long> getIds(E entity);
     @PostConstruct
     protected abstract void setupMapper();
-    
+
 }
+

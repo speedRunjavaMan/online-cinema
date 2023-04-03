@@ -25,3 +25,8 @@
 .text-link:hover {
     color: #001445;
 }
+
+.hr {
+    border: 1px solid;
+    color: #001445;
+}

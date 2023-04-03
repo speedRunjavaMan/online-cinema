@@ -1,4 +1,4 @@
-package com.SberProjectUEN.java13springTU.libraryproject.Utils;
+package com.SberProjectUEN.java13springTU.libraryproject.utils;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
