@@ -2,12 +2,18 @@ package com.SberProjectUEN.java13springTU.libraryproject.service;
 
 
 import com.SberProjectUEN.java13springTU.libraryproject.dto.GenericDTO;
+import com.SberProjectUEN.java13springTU.libraryproject.exception.MyDeleteException;
 import com.SberProjectUEN.java13springTU.libraryproject.mapper.GenericMapper;
 import com.SberProjectUEN.java13springTU.libraryproject.model.GenericModel;
 import com.SberProjectUEN.java13springTU.libraryproject.repository.GenericRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -23,6 +29,7 @@ public abstract class GenericService<T extends GenericModel, N extends GenericDT
 
     //Инжектим абстрактный репозиторий для работы с базой данных
     protected final GenericRepository<T> repository;
+    //Инжектим абстрактный маппер для преобразований из DTO -> Entity, и обратно.
     protected final GenericMapper<T, N> mapper;
 
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
@@ -32,24 +39,82 @@ public abstract class GenericService<T extends GenericModel, N extends GenericDT
         this.mapper = mapper;
     }
 
+    /**
+     * Метод, возвращающий полный список всех сущностей.
+     *
+     * @return Список сконвертированных сущностей в DTO
+     */
     public List<N> listAll() {
         return mapper.toDTOs(repository.findAll());
     }
 
+    public Page<N> listAll(Pageable pageable) {
+        Page<T> objects = repository.findAll(pageable);
+        List<N> result = mapper.toDTOs(objects.getContent());
+        return new PageImpl<>(result, pageable, objects.getTotalElements());
+    }
+
+    public Page<N> listAllNotDeleted(Pageable pageable) {
+        Page<T> preResult = repository.findAllByIsDeletedFalse(pageable);
+        List<N> result = mapper.toDTOs(preResult.getContent());
+        return new PageImpl<>(result, pageable, preResult.getTotalElements());
+    }
+
+    public List<N> listAllNotDeleted() {
+        return mapper.toDTOs(repository.findAllByIsDeletedFalse());
+    }
+
+    /***
+     * Получить информацию о конкретном объекте/сущности по ID.
+     *
+     * @param id - идентификатор сущности для поиска.
+     * @return - конкретная сущность в формате DTO
+     */
     public N getOne(Long id) {
-        return mapper.toDto(repository.findById(id).orElseThrow(() -> new NotFoundException("Данных по заданному id: " + id + " не найдены")));
+        return mapper.toDTO(repository.findById(id).orElseThrow(() -> new NotFoundException("Данных по заданному id: " + id + " не найдены")));
     }
 
+    /***
+     * Создание сущности в БД.
+     *
+     * @param object - информация о сущности/объекте.
+     * @return - сохраненная в БД сущность в формате DTO.
+     */
     public N create(N object) {
-        return mapper.toDto(repository.save(mapper.toEntity(object)));
+        object.setCreatedBy(SecurityContextHolder.getContext().getAuthentication().getName());
+        object.setCreatedWhen(LocalDateTime.now());
+        return mapper.toDTO(repository.save(mapper.toEntity(object)));
     }
 
+    /***
+     * Обновление сущности в БД.
+     *
+     * @param object - информация о сущности/объекте.
+     * @return - обновленная в БД сущность в формате DTO.
+     */
     public N update(N object) {
-        return mapper.toDto(repository.save(mapper.toEntity(object)));
+        return mapper.toDTO(repository.save(mapper.toEntity(object)));
     }
 
-    public void delete(Long id) {
+    /***
+     * Удаление сущности из БД.
+     *
+     * @param id - идентификатор сущности, которая должна быть удалена.
+     */
+    public void delete(Long id) throws MyDeleteException {
         repository.deleteById(id);
+    }
+
+    public void markAsDeleted(GenericModel genericModel) {
+        genericModel.setDeleted(true);
+        genericModel.setDeletedWhen(LocalDateTime.now());
+        genericModel.setDeletedBy(SecurityContextHolder.getContext().getAuthentication().getName());
+    }
+
+    public void unMarkAsDeleted(GenericModel genericModel) {
+        genericModel.setDeleted(false);
+        genericModel.setDeletedWhen(null);
+        genericModel.setDeletedBy(null);
     }
 }
 

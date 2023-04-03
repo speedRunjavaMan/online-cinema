@@ -5,6 +5,7 @@ import com.SberProjectUEN.java13springTU.libraryproject.model.Film;
 import com.SberProjectUEN.java13springTU.libraryproject.model.GenericModel;
 import com.SberProjectUEN.java13springTU.libraryproject.model.User;
 import com.SberProjectUEN.java13springTU.libraryproject.repository.FilmRentInfoRepository;
+import com.SberProjectUEN.java13springTU.libraryproject.utils.DateFormatter;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -42,10 +43,12 @@ public class UserMapper
         else {
             destination.setFilmRentInfos(Collections.emptySet());
         }
+        destination.setBirthDate(DateFormatter.formatStringToDate(source.getBirthDate()));
     }
     
     @Override
     protected void mapSpecificFields(User source, UserDTO destination) {
+
         destination.setUserFilmsRent(getIds(source));
     }
     

@@ -17,7 +17,7 @@ import java.util.Set;
 @NoArgsConstructor
 @SequenceGenerator(name = "default_gen", sequenceName = "films_seq", allocationSize = 1)
 //@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "id")
-@JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@json_id")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@json_id")
 public class Film
         extends GenericModel {
 
@@ -29,7 +29,8 @@ public class Film
 
     @Column(name = "country", nullable = false)
     private String country;
-
+    @Column(name = "online_copy_path")
+    private String onlineCopyPath;
     @Column(name = "genre", nullable = false)
     @Enumerated
     private Genre genre;

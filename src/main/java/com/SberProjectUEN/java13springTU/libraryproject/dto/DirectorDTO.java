@@ -12,4 +12,5 @@ public class DirectorDTO
     private String directorsFio;
     private String position;
     private Set<Long> filmsIds;
+    private boolean isDeleted;
 }

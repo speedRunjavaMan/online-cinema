@@ -1,9 +1,6 @@
 package com.SberProjectUEN.java13springTU.libraryproject.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -11,15 +8,16 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class FilmRentInfoDTO
         extends GenericDTO {
 
-    //    private BookDTO book;
-//    private UserDTO user;
+    private LocalDateTime rentDate;
+    private LocalDateTime returnDate;
+    private Boolean returned;
+    private Integer rentPeriod;
     private Long filmId;
     private Long userId;
-    private LocalDateTime rentDate;
-    private LocalDateTime rentPeriod;
+    private FilmDTO filmDTO;
     private Boolean purchase;
-
 }

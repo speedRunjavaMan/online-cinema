@@ -1,10 +1,11 @@
-package com.SberProjectUEN.java13springTU.libraryproject.controller;
+package com.SberProjectUEN.java13springTU.libraryproject.REST.controller;
 
 
 import com.SberProjectUEN.java13springTU.libraryproject.dto.GenericDTO;
 import com.SberProjectUEN.java13springTU.libraryproject.model.GenericModel;
 import com.SberProjectUEN.java13springTU.libraryproject.service.GenericService;
 import io.swagger.v3.oas.annotations.Operation;
+import lombok.SneakyThrows;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -70,6 +71,7 @@ public abstract class GenericController<T extends GenericModel, N extends Generi
 
     //@RequestParam: localhost:9090/api/rest/books/deleteBook?id=1
     //@PathVariable: localhost:9090/api/rest/books/deleteBook/1
+    @SneakyThrows
     @Operation(description = "Удалить запись по ID", method = "delete")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     public void delete(@PathVariable(value = "id") Long id) {

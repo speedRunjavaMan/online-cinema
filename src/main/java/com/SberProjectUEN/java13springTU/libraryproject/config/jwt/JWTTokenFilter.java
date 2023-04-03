@@ -56,4 +56,3 @@ public class JWTTokenFilter
         filterChain.doFilter(request, response);
     }
 }
-
