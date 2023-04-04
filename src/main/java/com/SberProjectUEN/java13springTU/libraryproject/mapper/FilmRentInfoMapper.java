@@ -4,6 +4,7 @@ import com.SberProjectUEN.java13springTU.libraryproject.dto.FilmRentInfoDTO;
 import com.SberProjectUEN.java13springTU.libraryproject.model.FilmRentInfo;
 import com.SberProjectUEN.java13springTU.libraryproject.repository.FilmRepository;
 import com.SberProjectUEN.java13springTU.libraryproject.repository.UserRepository;
+import com.SberProjectUEN.java13springTU.libraryproject.service.FilmService;
 import jakarta.annotation.PostConstruct;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -16,21 +17,24 @@ public class FilmRentInfoMapper
       extends GenericMapper<FilmRentInfo, FilmRentInfoDTO> {
     private final FilmRepository filmRepository;
     private final UserRepository userRepository;
-    
+    private final FilmService filmService;
     protected FilmRentInfoMapper(ModelMapper mapper,
                                  FilmRepository filmRepository,
-                                 UserRepository userRepository) {
+                                 UserRepository userRepository,
+                                 FilmService filmService) {
         super(mapper, FilmRentInfo.class, FilmRentInfoDTO.class);
         this.filmRepository = filmRepository;
         this.userRepository = userRepository;
+        this.filmService = filmService;
     }
     
     @PostConstruct
     public void setupMapper() {
         super.modelMapper.createTypeMap(FilmRentInfo.class, FilmRentInfoDTO.class)
               .addMappings(m -> m.skip(FilmRentInfoDTO::setUserId)).setPostConverter(toDtoConverter())
-              .addMappings(m -> m.skip(FilmRentInfoDTO::setFilmId)).setPostConverter(toDtoConverter());
-        
+              .addMappings(m -> m.skip(FilmRentInfoDTO::setFilmId)).setPostConverter(toDtoConverter())
+              .addMappings(m -> m.skip(FilmRentInfoDTO::setFilmDTO)).setPostConverter(toDtoConverter());
+
         super.modelMapper.createTypeMap(FilmRentInfoDTO.class, FilmRentInfo.class)
               .addMappings(m -> m.skip(FilmRentInfo::setUser)).setPostConverter(toEntityConverter())
               .addMappings(m -> m.skip(FilmRentInfo::setFilm)).setPostConverter(toEntityConverter());
@@ -46,6 +50,7 @@ public class FilmRentInfoMapper
     protected void mapSpecificFields(FilmRentInfo source, FilmRentInfoDTO destination) {
         destination.setUserId(source.getUser().getId());
         destination.setFilmId(source.getFilm().getId());
+        destination.setFilmDTO(filmService.getOne(source.getFilm().getId()));
     }
     
     @Override

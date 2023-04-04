@@ -16,8 +16,9 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @SequenceGenerator(name = "default_gen", sequenceName = "directors_seq", allocationSize = 1)
+//@Where(clause = "is_deleted = false")
 //@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "id")
-@JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@json_id")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, property = "@json_id")
 public class Director
         extends GenericModel {
     @Column(name = "directors_fio", nullable = false)

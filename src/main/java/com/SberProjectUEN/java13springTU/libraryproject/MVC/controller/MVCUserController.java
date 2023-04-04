@@ -3,6 +3,7 @@ package com.SberProjectUEN.java13springTU.libraryproject.MVC.controller;
 
 import com.SberProjectUEN.java13springTU.libraryproject.constants.Errors;
 import com.SberProjectUEN.java13springTU.libraryproject.dto.UserDTO;
+import com.SberProjectUEN.java13springTU.libraryproject.exception.MyDeleteException;
 import com.SberProjectUEN.java13springTU.libraryproject.service.UserService;
 import com.SberProjectUEN.java13springTU.libraryproject.service.userdetails.CustomUserDetails;
 import io.swagger.v3.oas.annotations.Hidden;
@@ -185,6 +186,18 @@ public class MVCUserController {
             return "registration";
         }
         userService.create(userDTO);
+        return "redirect:/users/list";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable Long id) throws MyDeleteException {
+        userService.delete(id);
+        return "redirect:/users/list";
+    }
+
+    @GetMapping("/restore/{id}")
+    public String restore(@PathVariable Long id) {
+        userService.restore(id);
         return "redirect:/users/list";
     }
 }

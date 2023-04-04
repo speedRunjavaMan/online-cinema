@@ -4,6 +4,7 @@ package com.SberProjectUEN.java13springTU.libraryproject.service;
 import com.SberProjectUEN.java13springTU.libraryproject.constants.MailConstants;
 import com.SberProjectUEN.java13springTU.libraryproject.dto.RoleDTO;
 import com.SberProjectUEN.java13springTU.libraryproject.dto.UserDTO;
+import com.SberProjectUEN.java13springTU.libraryproject.exception.MyDeleteException;
 import com.SberProjectUEN.java13springTU.libraryproject.mapper.UserMapper;
 import com.SberProjectUEN.java13springTU.libraryproject.model.User;
 import com.SberProjectUEN.java13springTU.libraryproject.repository.UserRepository;
@@ -17,6 +18,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.webjars.NotFoundException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -98,6 +100,20 @@ public class UserService
 
     public List<String> getUserEmailsWithDelayedRentDate() {
         return ((UserRepository) repository).getDelayedEmails();
+    }
+    @Override
+    public void delete(Long id) throws MyDeleteException {
+        User user = repository.findById(id).orElseThrow(
+                () -> new NotFoundException("Пользователя с заданным ID=" + id + " не существует"));
+        markAsDeleted(user);
+        repository.save(user);
+    }
+
+    public void restore(Long objectId) {
+        User user = repository.findById(objectId).orElseThrow(
+                () -> new NotFoundException("Пользователя с заданным ID=" + objectId + " не существует"));
+        unMarkAsDeleted(user);
+        repository.save(user);
     }
 }
 

@@ -40,7 +40,7 @@
                 <h2>Все режиссеры онлайн кинотеатра</h2>
             </div>
             <div class="col">
-                <a sec:directorize="isAuthenticated() && (hasRole('ADMIN') || hasRole('LIBRARIAN'))"
+                <a sec:authorize="isAuthenticated() && (hasRole('ADMIN') || hasRole('LIBRARIAN'))"
                    href="directors/add"
                    class="btn btn-success"
                    role="button"
@@ -65,7 +65,7 @@
                     </td>
                     <td th:text="${director.getPosition()}"></td>
                     <td>
-                        <div sec:directorize="isAuthenticated() && (hasRole('ADMIN') || hasRole('LIBRARIAN'))">
+                        <div sec:authorize="isAuthenticated() && (hasRole('ADMIN') || hasRole('LIBRARIAN'))">
                             <a class="btn btn-sm btn-outline-success"
                                th:href="'/directors/update/' + ${director.getId()}">Обновить</a>
                             <a th:if="${!director.isDeleted()}" class="btn btn-sm btn-outline-danger"

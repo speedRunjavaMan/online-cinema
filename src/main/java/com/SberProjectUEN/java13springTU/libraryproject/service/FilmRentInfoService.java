@@ -43,9 +43,9 @@ public class FilmRentInfoService
         filmService.update(filmDTO);
         long rentPeriod = rentFilmDTO.getRentPeriod() != null ? rentFilmDTO.getRentPeriod() : 14L;
         rentFilmDTO.setRentDate(LocalDateTime.now());
-//        rentFilmDTO.setReturned(false);
+        rentFilmDTO.setReturned(false);
         rentFilmDTO.setRentPeriod((int) rentPeriod);
-//        rentFilmDTO.setReturnDate(LocalDateTime.now().plusDays(rentPeriod));
+        rentFilmDTO.setReturnDate(LocalDateTime.now().plusDays(rentPeriod));
         rentFilmDTO.setCreatedWhen(LocalDateTime.now());
         rentFilmDTO.setCreatedBy(SecurityContextHolder.getContext().getAuthentication().getName());
         return mapper.toDTO(repository.save(mapper.toEntity(rentFilmDTO)));
