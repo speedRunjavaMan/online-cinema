@@ -15,15 +15,15 @@ public interface FilmRepository
 //            value = """
 //                    select b.*
 //                    from films b
-//                    where b.title ilike '%' || nullif(:title, b.title) || '%'
+//                    where b.title ilike '%' || nullif(:title, b.title) или coalesce(:title,'%')|| '%'
 //                    and cast(b.genre as char) like coalesce(:genre,'%')
 //                          """)
     value = """
-                 select f.*
+                 select distinct f.*
                  from films f
                  left join films_directors fd on f.id = fd.film_id
                  join directors d on d.id = fd.director_id
-                 where f.title ilike '%' || :title || '%'
+                 where f.title ilike '%' || coalesce(:title,'%') || '%'
                  and cast(f.genre as char) like coalesce(:genre,'%')
                  and d.directors_fio ilike '%' || :directors_fio || '%'
                  and f.is_deleted = false

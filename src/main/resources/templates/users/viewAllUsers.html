@@ -88,9 +88,9 @@
           <td th:text="${user.isDeleted()} ? 'Да' : 'Нет'"></td>
           <td>
             <div sec:authorize="isAuthenticated() && (hasRole('ADMIN'))">
-              <a th:if="${!user.isDeleted()}" class="btn btn-sm btn-outline-danger" th:href="'/directors/delete/' + ${user.getId()}"
+              <a th:if="${!user.isDeleted()}" class="btn btn-sm btn-outline-danger" th:href="'/users/delete/' + ${user.getId()}"
                  onclick="return confirm('Вы действительно хотите удалить пользователя?');">Удалить</a>
-              <a th:if="${user.isDeleted()}" class="btn btn-sm btn-outline-warning" th:href="'/directors/undelete/' + ${user.getId()}">Восстановить</a>
+              <a th:if="${user.isDeleted()}" class="btn btn-sm btn-outline-warning" th:href="'/users/restore/' + ${user.getId()}">Восстановить</a>
             </div>
           </td>
         </tr>

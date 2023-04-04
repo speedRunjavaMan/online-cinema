@@ -7,6 +7,8 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class DirectorDTO
       extends GenericDTO {
     private String directorsFio;

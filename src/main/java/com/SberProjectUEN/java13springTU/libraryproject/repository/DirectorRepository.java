@@ -19,8 +19,8 @@ public interface DirectorRepository
           select case when count(a) > 0 then false else true end
           from Director a join a.films b
                         join FilmRentInfo bri on b.id = bri.film.id
-          where a.id = :authorId
+          where a.id = :directorId
           and bri.returned = false
           """)
-    boolean checkDirectorForDeletion(final Long authorId);
+    boolean checkDirectorForDeletion(final Long directorId);
 }

@@ -169,7 +169,7 @@ public class MVCFilmController {
                                     RedirectAttributes redirectAttributes) {
         log.error("Запрос: " + req.getRequestURL() + " вызвал ошибку " + ex.getMessage());
         redirectAttributes.addFlashAttribute("exception", ex.getMessage());
-        return new RedirectView("/books", true);
+        return new RedirectView("/films", true);
     }
 }
 
