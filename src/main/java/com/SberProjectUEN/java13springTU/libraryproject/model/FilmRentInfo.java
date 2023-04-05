@@ -29,14 +29,16 @@ public class FilmRentInfo
     @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "FK_ORDERS_USER"))
     private User user;
 
-    @Column(name = "rentDate", nullable = false)
+    @Column(name = "rent_date", nullable = false)
     private LocalDateTime rentDate;
     //поле автоматически должно рассчитываться из rent_date + rent_period
-    @Column(name = "rentPeriod", nullable = false)
-    private Integer rentPeriod;
-    //rent_period - количество дней аренды, если не указано, то по-умолчанию - 14 дней
+    @Column(name = "return_date", nullable = false)
+    private LocalDateTime returnDate;
     @Column(name = "returned", nullable = false)
     private Boolean returned;
     @Column(name = "purchase")
     private Boolean purchase;
+    @Column(name = "rentPeriod", nullable = false)
+    private Integer rentPeriod;
+    //rent_period - количество дней аренды, если не указано, то по-умолчанию - 14 дней
 }
