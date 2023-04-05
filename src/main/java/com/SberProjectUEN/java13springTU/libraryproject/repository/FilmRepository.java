@@ -22,16 +22,20 @@ public interface FilmRepository
                  select distinct f.*
                  from films f
                  left join films_directors fd on f.id = fd.film_id
-                 join directors d on d.id = fd.director_id
+                 left join directors d on d.id = fd.director_id
+                 left join films_composers fc on f.id = fc.film_id
+                 left join composers c on c.id = fc.composer_id
                  where f.title ilike '%' || coalesce(:title,'%') || '%'
                  and cast(f.genre as char) like coalesce(:genre,'%')
-                 and d.directors_fio ilike '%' || :directors_fio || '%'
+                 and (d.directors_fio is null or d.directors_fio ilike '%' || :directors_fio || '%')
+                 and (c.composers_fio is null or c.composers_fio ilike '%' || :composers_fio || '%')
                  and f.is_deleted = false
                       """)
 
     Page<Film> searchFilms(@Param(value = "genre") String genre,
                            @Param(value = "title") String title,
                            @Param(value = "directors_fio") String directors_fio,
+                           @Param(value = "composers_fio") String composers_fio,
                            Pageable pageable);
 
     @Query("""

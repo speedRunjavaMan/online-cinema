@@ -35,6 +35,7 @@ public interface SecurityConstants {
     List<String> RESOURCES_WHITE_LIST = List.of("/resources/**",
                                                 "/js/**",
                                                 "/css/**",
+                                                "/images/**",
                                                 "/",
                                                 // -- Swagger UI v3 (OpenAPI)
                                                 "/swagger-ui/**",
@@ -42,21 +43,29 @@ public interface SecurityConstants {
                                                 "/v3/api-docs/**",
                                                 "/error");
 
-    List<String> FILMS_WHITE_LIST = List.of(
-                                            "/films",
+    List<String> FILMS_WHITE_LIST = List.of("/films",
                                             "/films/search",
                                             "/films/{id}");
     List<String> DIRECTORS_WHITE_LIST = List.of("/directors",
                                                 "/directors/search",
                                                 "/films/search/director",
                                                 "/directors/{id}");
+    List<String> COMPOSERS_WHITE_LIST = List.of("/composers",
+                                                "/composers/search",
+                                                "/films/search/composer",
+                                                "/composers/{id}");
+
     List<String> FILMS_PERMISSION_LIST = List.of("/films/add",
-                                                "/films/update",
-                                                "/films/delete",
-                                                "/films/download/{filmId}");
+                                                 "/films/update",
+                                                 "/films/delete",
+                                                 "/films/download/{filmId}");
     List<String> DIRECTORS_PERMISSION_LIST = List.of("/directors/add",
-                                                    "/directors/update",
-                                                    "/directors/delete");
+                                                     "/directors/update",
+                                                     "/directors/delete");
+    List<String> COMPOSERS_PERMISSION_LIST = List.of("/composers/add",
+                                                     "/composers/update",
+                                                     "/composers/delete");
+
     List<String> USERS_WHITE_LIST = List.of("/login",
                                             "/users/registration",
                                             "/users/remember-password",

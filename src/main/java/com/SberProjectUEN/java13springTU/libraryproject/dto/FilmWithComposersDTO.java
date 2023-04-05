@@ -9,9 +9,9 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class FilmWithDirectorsDTO
+public class FilmWithComposersDTO
         extends FilmDTO {
-    public FilmWithDirectorsDTO(Film film, Set<DirectorDTO> directors, Set<ComposerDTO> composers) {
+    public FilmWithComposersDTO(Film film, Set<DirectorDTO> directors,Set<ComposerDTO> composers) {
         super(film);
         this.directors = directors;
         this.composers = composers;

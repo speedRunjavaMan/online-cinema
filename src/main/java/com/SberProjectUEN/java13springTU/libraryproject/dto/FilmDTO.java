@@ -1,12 +1,11 @@
 package com.SberProjectUEN.java13springTU.libraryproject.dto;
 
+import com.SberProjectUEN.java13springTU.libraryproject.model.Composer;
 import com.SberProjectUEN.java13springTU.libraryproject.model.Director;
 import com.SberProjectUEN.java13springTU.libraryproject.model.Film;
 import com.SberProjectUEN.java13springTU.libraryproject.model.Genre;
 import lombok.*;
 
-
-import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -27,8 +26,11 @@ public class FilmDTO
   public Set<Long> getDirectorsIds() {
     return directorsIds;
   }
-
+  public Set<Long> getComposersIds() {
+    return composersIds;
+  }
   private Set<Long> directorsIds;
+  private Set<Long> composersIds;
   
       public FilmDTO(Film film) {
         FilmDTO filmDTO = new FilmDTO();
@@ -45,14 +47,11 @@ public class FilmDTO
           directors.forEach(a -> directorIds.add(a.getId()));
         }
         filmDTO.setDirectorsIds(directorIds);
+        Set<Composer> composers = film.getComposers();
+        Set<Long> composerIds = new HashSet<>();
+        if (composers != null && composers.size() > 0) {
+          composers.forEach(a -> composerIds.add(a.getId()));
+        }
+        filmDTO.setComposersIds(composerIds);
       }
-
-//
-//    public List<BookDTO> getBookDTOs(List<Book> books) {
-//        List<BookDTO> bookDTOS = new ArrayList<>();
-//        for (Book book : books) {
-//            bookDTOS.add(new BookDTO(book));
-//        }
-//        return bookDTOS;
-//    }
 }

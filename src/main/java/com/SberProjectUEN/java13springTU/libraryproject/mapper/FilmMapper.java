@@ -3,6 +3,7 @@ package com.SberProjectUEN.java13springTU.libraryproject.mapper;
 import com.SberProjectUEN.java13springTU.libraryproject.dto.FilmDTO;
 import com.SberProjectUEN.java13springTU.libraryproject.model.Film;
 import com.SberProjectUEN.java13springTU.libraryproject.model.GenericModel;
+import com.SberProjectUEN.java13springTU.libraryproject.repository.ComposerRepository;
 import com.SberProjectUEN.java13springTU.libraryproject.repository.DirectorRepository;
 import com.SberProjectUEN.java13springTU.libraryproject.utils.DateFormatter;
 import jakarta.annotation.PostConstruct;
@@ -19,19 +20,22 @@ import java.util.stream.Collectors;
 public class FilmMapper
       extends GenericMapper<Film, FilmDTO> {
     private final DirectorRepository directorRepository;
-    
-    protected FilmMapper(ModelMapper mapper, DirectorRepository directorRepository) {
+    private final ComposerRepository composerRepository;
+    protected FilmMapper(ModelMapper mapper, DirectorRepository directorRepository, ComposerRepository composerRepository) {
         super(mapper, Film.class, FilmDTO.class);
         this.directorRepository = directorRepository;
+        this.composerRepository = composerRepository;
     }
     
     @PostConstruct
     @Override
     public void setupMapper() {
         modelMapper.createTypeMap(Film.class, FilmDTO.class)
-              .addMappings(m -> m.skip(FilmDTO::setDirectorsIds)).setPostConverter(toDtoConverter());
+              .addMappings(m -> m.skip(FilmDTO::setDirectorsIds)).setPostConverter(toDtoConverter())
+              .addMappings(m -> m.skip(FilmDTO::setComposersIds)).setPostConverter(toDtoConverter());
         modelMapper.createTypeMap(FilmDTO.class, Film.class)
               .addMappings(m -> m.skip(Film::setDirectors)).setPostConverter(toEntityConverter())
+              .addMappings(m -> m.skip(Film::setComposers)).setPostConverter(toEntityConverter())
               .addMappings(m -> m.skip(Film::setPremierYear)).setPostConverter(toEntityConverter());
     }
     
@@ -43,12 +47,20 @@ public class FilmMapper
         else {
             destination.setDirectors(Collections.emptySet());
         }
+        if (!Objects.isNull(source.getComposersIds())) {
+            destination.setComposers(new HashSet<>(composerRepository.findAllById(source.getComposersIds())));
+        }
+        else {
+            destination.setDirectors(Collections.emptySet());
+        }
         destination.setPremierYear(DateFormatter.formatStringToDate(source.getPremierYear()));
     }
     
     @Override
     protected void mapSpecificFields(Film source, FilmDTO destination) {
+
         destination.setDirectorsIds(getIds(source));
+        destination.setComposersIds(getIds(source));
     }
     
     protected Set<Long> getIds(Film film) {

@@ -1,9 +1,7 @@
 package com.SberProjectUEN.java13springTU.libraryproject.service;
 
 import com.SberProjectUEN.java13springTU.libraryproject.constants.Errors;
-import com.SberProjectUEN.java13springTU.libraryproject.dto.FilmDTO;
-import com.SberProjectUEN.java13springTU.libraryproject.dto.FilmSearchDTO;
-import com.SberProjectUEN.java13springTU.libraryproject.dto.FilmWithDirectorsDTO;
+import com.SberProjectUEN.java13springTU.libraryproject.dto.*;
 import com.SberProjectUEN.java13springTU.libraryproject.exception.MyDeleteException;
 import com.SberProjectUEN.java13springTU.libraryproject.mapper.FilmMapper;
 import com.SberProjectUEN.java13springTU.libraryproject.mapper.FilmWithDirectorsMapper;
@@ -30,15 +28,18 @@ public class FilmService
     //  Инжектим конкретный репозиторий для работы с таблицей books
     private final FilmRepository repository;
     private final FilmWithDirectorsMapper filmWithDirectorsMapper;
-
+//    private final DirectorService directorService;
     protected FilmService(FilmRepository repository,
                           FilmMapper mapper,
-                          FilmWithDirectorsMapper filmWithDirectorsMapper) {
+//                          DirectorService directorService,
+                          FilmWithDirectorsMapper filmWithDirectorsMapper
+                          ) {
         //Передаем этот репозиторий в абстрактный сервис,
         //чтобы он понимал с какой таблицей будут выполняться CRUD операции
         super(repository, mapper);
         this.repository = repository;
         this.filmWithDirectorsMapper = filmWithDirectorsMapper;
+//        this.directorService = directorService;
     }
 
     public FilmDTO addDirectorToFilm(Long filmId, Long directorId) {
@@ -47,6 +48,18 @@ public class FilmService
         dir.add(directorId);
         object.setDirectorsIds(dir);
         return mapper.toDTO(repository.save(mapper.toEntity(object)));
+    }
+    public void addDirector(AddDirectorDTO addDirectorDTO) {
+        FilmDTO film = getOne(addDirectorDTO.getFilmId());
+//        directorService.getOne(addDirectorDTO.getDirectorId());
+        film.getDirectorsIds().add(addDirectorDTO.getDirectorId());
+        update(film);
+    }
+    public void addComposer(AddComposerDTO addComposerDTO) {
+        FilmDTO film = getOne(addComposerDTO.getFilmId());
+//        composerService.getOne(addComposerDTO.getComposerId());
+        film.getComposersIds().add(addComposerDTO.getComposerId());
+        update(film);
     }
 
     public Page<FilmWithDirectorsDTO> getAllFilmsWithDirectors(Pageable pageable) {
@@ -71,6 +84,7 @@ public class FilmService
         Page<Film> filmsPaginated = repository.searchFilms(genre,
                                                             filmSearchDTO.getFilmTitle(),
                                                             filmSearchDTO.getDirectorsFio(),
+                                                            filmSearchDTO.getComposersFio(),
                                                             pageable
                                                             );
         List<FilmWithDirectorsDTO> result = filmWithDirectorsMapper.toDTOs(filmsPaginated.getContent());

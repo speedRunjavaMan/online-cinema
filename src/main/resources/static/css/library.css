@@ -1,5 +1,5 @@
 .not-enough-film {
-    color: red;
+    color: #470F3C;
 }
 
 .nav-link {
@@ -8,13 +8,13 @@
 
 .btn-primary {
     color: white !important;
-    background-color: #b84f3c !important;
-    border-color: #b84f3c !important;
+    background-color: #470F3C !important;
+    border-color: #3F0D35FF !important;
 }
 
 .btn-primary:hover {
-    background-color: #b84f3c !important;
-    border-color: #b84f3c !important;
+    background-color: #3f0d35 !important;
+    border-color: #3F0D35FF !important;
     color: white !important;
 }
 

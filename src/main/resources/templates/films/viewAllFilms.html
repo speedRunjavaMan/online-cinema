@@ -34,6 +34,12 @@
         </div>
         <div class="col-md">
           <div class="form-floating">
+            <input name="composersFio" type="text" class="form-control" id="composersFio" placeholder="ФИО композитора">
+            <label for="composersFio">Композитор</label>
+          </div>
+        </div>
+        <div class="col-md">
+          <div class="form-floating">
             <select class="form-select" name="genre" id="genre">
               <option selected th:value="null">Выберете жанр из списка</option>
               <option th:each="genre : ${T(com.SberProjectUEN.java13springTU.libraryproject.model.Genre).values()}"
@@ -71,6 +77,7 @@
           <th scope="col">Жанр</th>
           <th scope="col">Дата выхода</th>
           <th scope="col">Режиссер(ы)</th>
+          <th scope="col">Композитор(ы)</th>
           <th scope="col">Онлайн копия</th>
           <th scope="col"></th>
         </tr>
@@ -85,6 +92,11 @@
           <td>
             <ul>
               <li th:each="director : ${film.getDirectors()}" th:text="${director.getDirectorsFio()}"></li>
+            </ul>
+          </td>
+          <td>
+            <ul>
+              <li th:each="composer : ${film.getComposers()}" th:text="${composer.getComposersFio()}"></li>
             </ul>
           </td>
           <td>
