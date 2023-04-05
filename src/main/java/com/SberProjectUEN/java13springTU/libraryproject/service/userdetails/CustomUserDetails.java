@@ -1,5 +1,7 @@
 package com.SberProjectUEN.java13springTU.libraryproject.service.userdetails;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -18,6 +20,8 @@ import java.util.Collection;
 
 // JWT Token/ GWT - Google Web Toolkit
 // eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiJiMDhmODZhZi0zNWRhLTQ4ZjItOGZhYi1jZWYzOTA0NjYwYmQifQ.-xN_h82PHVTCMA9vdoHrcZxH-x5mb11y1537t3rGzcM
+@AllArgsConstructor
+@Builder
 public class CustomUserDetails
         implements UserDetails {
     private final String password;
