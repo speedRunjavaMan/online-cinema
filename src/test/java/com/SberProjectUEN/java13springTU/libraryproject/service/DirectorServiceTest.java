@@ -32,10 +32,10 @@ public class DirectorServiceTest
     
     public DirectorServiceTest() {
         super();
-        FilmService bookService = Mockito.mock(FilmService.class);
+        FilmService filmService = Mockito.mock(FilmService.class);
         repository = Mockito.mock(DirectorRepository.class);
         mapper = Mockito.mock(DirectorMapper.class);
-        service = new DirectorService((DirectorRepository) repository, (DirectorMapper) mapper, bookService);
+        service = new DirectorService((DirectorRepository) repository, (DirectorMapper) mapper, filmService);
     }
     
     @Test
@@ -114,12 +114,12 @@ public class DirectorServiceTest
     @Order(7)
     @Test
     void searchDirectors() {
-        PageRequest pageRequest = PageRequest.of(1, 10, Sort.by(Sort.Direction.ASC, "authorFio"));
-        Mockito.when(((DirectorRepository) repository).findAllByDirectorsFioContainsIgnoreCaseAndIsDeletedFalse("authorFio1", pageRequest))
+        PageRequest pageRequest = PageRequest.of(1, 10, Sort.by(Sort.Direction.ASC, "directorsFio"));
+        Mockito.when(((DirectorRepository) repository).findAllByDirectorsFioContainsIgnoreCaseAndIsDeletedFalse("directorsFio1", pageRequest))
               .thenReturn(new PageImpl<>(DirectorTestData.DIRECTOR_LIST));
         Mockito.when(mapper.toDTOs(DirectorTestData.DIRECTOR_LIST)).thenReturn(DirectorTestData.DIRECTOR_DTO_LIST);
-        Page<DirectorDTO> directorDTOList = ((DirectorService) service).searchDirectors("authorFio1", pageRequest);
-        log.info("Testing searchAuthors(): " + directorDTOList);
+        Page<DirectorDTO> directorDTOList = ((DirectorService) service).searchDirectors("directorsFio1", pageRequest);
+        log.info("Testing searchDirectors(): " + directorDTOList);
         assertEquals(DirectorTestData.DIRECTOR_DTO_LIST, directorDTOList.getContent());
     }
     
