@@ -8,7 +8,9 @@ public interface Errors {
     class Directors {
         public static final String DIRECTOR_DELETE_ERROR = "Режиссер не может быть удален, так как у его фильмов есть активные аренды";
     }
-
+    class Composers {
+        public static final String COMPOSER_DELETE_ERROR = "Композитор не может быть удален, так как у его фильмов есть активные аренды";
+    }
     class Users {
         public static final String USER_FORBIDDEN_ERROR = "У вас нет прав просматривать информацию о пользователе";
     }

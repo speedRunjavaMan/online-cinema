@@ -1,10 +1,9 @@
 package com.SberProjectUEN.java13springTU.libraryproject.MVC.controller;
 
-import com.SberProjectUEN.java13springTU.libraryproject.dto.DirectorDTO;
-import com.SberProjectUEN.java13springTU.libraryproject.dto.FilmDTO;
-import com.SberProjectUEN.java13springTU.libraryproject.dto.FilmSearchDTO;
-import com.SberProjectUEN.java13springTU.libraryproject.dto.FilmWithDirectorsDTO;
+import com.SberProjectUEN.java13springTU.libraryproject.dto.*;
 import com.SberProjectUEN.java13springTU.libraryproject.exception.MyDeleteException;
+import com.SberProjectUEN.java13springTU.libraryproject.service.ComposerService;
+import com.SberProjectUEN.java13springTU.libraryproject.service.DirectorService;
 import com.SberProjectUEN.java13springTU.libraryproject.service.FilmService;
 import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.servlet.http.HttpServletRequest;
@@ -39,11 +38,15 @@ import static com.SberProjectUEN.java13springTU.libraryproject.constants.UserRol
 @RequestMapping("films")
 @Slf4j
 public class MVCFilmController {
+    private final DirectorService directorService;
     private final FilmService filmService;
-
-    public MVCFilmController(FilmService filmService) {
-
+    private final ComposerService composerService;
+    public MVCFilmController(DirectorService directorService,
+                             FilmService filmService,
+                             ComposerService composerService) {
+        this.directorService = directorService;
         this.filmService = filmService;
+        this.composerService = composerService;
     }
 
     //url: localhost:9090/api/films/?page=1&size=2
@@ -106,6 +109,35 @@ public class MVCFilmController {
            }
            return "redirect:/films";
        }
+    @GetMapping("/add-director/{filmId}")
+    public String addDirector(@PathVariable Long filmId,
+                          Model model) {
+        model.addAttribute("directors", directorService.listAll());
+        model.addAttribute("filmId", filmId);
+        model.addAttribute("film", filmService.getOne(filmId).getFilmTitle());
+        return "films/addFilmDirector";
+    }
+
+    @PostMapping("/add-director")
+    public String addDirector(@ModelAttribute("filmDirectorForm") AddDirectorDTO addDirectorDTO) {
+        filmService.addDirector(addDirectorDTO);
+        return "redirect:/films";
+    }
+    @GetMapping("/add-composer/{filmId}")
+    public String addComposer(@PathVariable Long filmId,
+                              Model model) {
+        model.addAttribute("composers", composerService.listAll());
+        model.addAttribute("filmId", filmId);
+        model.addAttribute("film", filmService.getOne(filmId).getFilmTitle());
+        return "films/addFilmComposer";
+    }
+
+    @PostMapping("/add-composer")
+    public String addComposer(@ModelAttribute("filmComposerForm") AddComposerDTO addComposerDTO) {
+        filmService.addComposer(addComposerDTO);
+        return "redirect:/films";
+    }
+
 
     @PostMapping("/search")
     public String searchFilms(@RequestParam(value = "page", defaultValue = "1") int page,
@@ -125,6 +157,15 @@ public class MVCFilmController {
                               Model model) {
         FilmSearchDTO filmSearchDTO = new FilmSearchDTO();
         filmSearchDTO.setDirectorsFio(directorDTO.getDirectorsFio());
+        return searchFilms(page, pageSize, filmSearchDTO, model);
+    }
+    @PostMapping("/search/composer")
+    public String searchFilms(@RequestParam(value = "page", defaultValue = "1") int page,
+                              @RequestParam(value = "size", defaultValue = "5") int pageSize,
+                              @ModelAttribute("composerSearchForm") ComposerDTO composerDTO,
+                              Model model) {
+        FilmSearchDTO filmSearchDTO = new FilmSearchDTO();
+        filmSearchDTO.setComposersFio(composerDTO.getComposersFio());
         return searchFilms(page, pageSize, filmSearchDTO, model);
     }
 

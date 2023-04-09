@@ -44,7 +44,13 @@ public class Film
             inverseJoinColumns = @JoinColumn(name = "director_id"), inverseForeignKey = @ForeignKey(name = "FK_DIRECTORS_FILMS"))
     //@JsonBackReference
     private Set<Director> directors;
-
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+            fetch = FetchType.LAZY)
+    @JoinTable(name = "films_composers",
+            joinColumns = @JoinColumn(name = "film_id"), foreignKey = @ForeignKey(name = "FK_FILMS_COMPOSERS"),
+            inverseJoinColumns = @JoinColumn(name = "composer_id"), inverseForeignKey = @ForeignKey(name = "FK_COMPOSERS_FILMS"))
+    //@JsonBackReference
+    private Set<Composer> composers;
     @OneToMany(mappedBy = "film", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Set<FilmRentInfo> filmRentInfos;
 }

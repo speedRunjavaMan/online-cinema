@@ -1,6 +1,6 @@
 package com.SberProjectUEN.java13springTU.libraryproject.dto;
 
-import com.SberProjectUEN.java13springTU.libraryproject.model.Director;
+import com.SberProjectUEN.java13springTU.libraryproject.model.Composer;
 import com.SberProjectUEN.java13springTU.libraryproject.model.Film;
 import lombok.*;
 
@@ -12,9 +12,9 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class DirectorDTO
-      extends GenericDTO {
-    private String directorsFio;
+public class ComposerDTO
+        extends GenericDTO {
+    private String composersFio;
     private String position;
     private boolean isDeleted;
     private Set<Long> filmsIds;
@@ -23,17 +23,19 @@ public class DirectorDTO
     }
 
 
-    public DirectorDTO(Director director) {
-        DirectorDTO directorDTO = new DirectorDTO();
+    public ComposerDTO(Composer composer) {
+        ComposerDTO composerDTO = new ComposerDTO();
         //из entity делаем DTO
-        directorDTO.setDirectorsFio(director.getDirectorsFio());
-        directorDTO.setPosition(director.getPosition());
-        directorDTO.setId(director.getId());
-        Set<Film> films = director.getFilms();
+        composerDTO.setComposersFio(composer.getComposersFio());
+        composerDTO.setPosition(composer.getPosition());
+        composerDTO.setId(composer.getId());
+        Set<Film> films = composer.getFilms();
         Set<Long> filmIds = new HashSet<>();
         if (films != null && films.size() > 0) {
             films.forEach(a -> filmIds.add(a.getId()));
         }
-        directorDTO.setFilmsIds(filmIds);
+        composerDTO.setFilmsIds(filmIds);
     }
 }
+
+

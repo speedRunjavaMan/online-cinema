@@ -12,6 +12,7 @@ import lombok.ToString;
 public class FilmSearchDTO {
     private String filmTitle;
     private String directorsFio;
+    private String composersFio;
     private Genre genre;
 }
 

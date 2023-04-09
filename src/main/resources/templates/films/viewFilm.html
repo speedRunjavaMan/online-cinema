@@ -4,72 +4,101 @@
       layout:decorate="~{layout}"
       lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Просмотр фильма</title>
+    <meta charset="UTF-8">
+    <title>Просмотр фильма</title>
 </head>
 <body>
 <form layout:fragment="content">
-  <div>
-    <h3 th:text="'Информация о фильме: ' + ${film.getFilmTitle()}"></h3>
-    <form class="row g-1">
-      <div class="mb-2 row">
-        <label for="filmTitle" class="col-sm-2 col-form-label no-border">Название:</label>
-        <div class="col-sm-10">
-          <p th:text="${film.getFilmTitle()}" type="text" readonly class="form-control-plaintext" id="filmTitle">
+    <div>
+        <h3 th:text="'Информация о фильме: ' + ${film.getFilmTitle()}"></h3>
+        <form class="row g-1">
+            <div class="mb-2 row">
+                <label for="filmTitle" class="col-sm-2 col-form-label no-border">Название:</label>
+                <div class="col-sm-10">
+                    <p th:text="${film.getFilmTitle()}" type="text" readonly class="form-control-plaintext"
+                       id="filmTitle">
+                </div>
+            </div>
+            <div class="mb-2 row">
+                <label for="genre" class="col-sm-2 col-form-label">Жанр:</label>
+                <div class="col-sm-10">
+                    <p th:text="${film.getGenre().getGenreTextDisplay()}" class="form-control-plaintext" id="genre">
+                </div>
+            </div>
+            <!--            <div class="mb-2 row">-->
+            <!--                <label class="col-sm-2 col-form-label">Онлайн копия:</label>-->
+            <!--                <div class="col-sm-10">-->
+            <!--                    <a class="text-link text-blue" th:if="${book.getOnlineCopyPath()} != null" th:href="@{|/books/download?bookId=${book.id}|}">-->
+            <!--                        <span>Скачать книгу</span>-->
+            <!--                    </a>-->
+            <!--                </div>-->
+            <!--            </div>-->
+            <div class="mb-2 row">
+                <label for="date" class="col-sm-2 col-form-label">Дата выхода:</label>
+                <div class="col-sm-10">
+                    <p th:text="${film.getPremierYear()}" class="form-control-plaintext" id="date">
+                </div>
+            </div>
+            <div class="mb-2 row">
+                <label for="country" class="col-sm-2 col-form-label">Страна</label>
+                <div class="col-sm-10">
+                    <p th:text="${film.getCountry()}" class="form-control-plaintext" id="country">
+                </div>
+            </div>
+        </form>
+        <hr class="hr"/>
+        <form class="row g-1">
+            <h4 class="mt-3 mb-3" th:text="'Информация о режиссере(ах)'"></h4>
+            <div th:each="director : ${film.getDirectors()}">
+                <div class="mb-2 row">
+                    <label for="directorfio" class="col-sm-2 col-form-label">ФИО:</label>
+                    <div class="col-sm-10">
+                        <a class="text-link text-blue" th:href="'/directors/' + ${director.getId()}"
+                           th:text="${director.getDirectorsFio()}" id="directorfio"></a>
+                    </div>
+                </div>
+                <div class="mb-2 row">
+                    <label for="director_position" class="col-sm-2 col-form-label">Позиция</label>
+                    <div class="col-sm-10">
+                        <p th:text="${director.getPosition()}" class="form-control-plaintext" id="director_position">
+                    </div>
+                </div>
+            </div>
+        </form>
+        <hr class="hr"/>
+        <form class="row g-1">
+            <h4 class="mt-3 mb-3" th:text="'Информация о композиторе(ах)'"></h4>
+            <div th:each="composer : ${film.getComposers()}">
+                <div class="mb-2 row">
+                    <label for="composerfio" class="col-sm-2 col-form-label">ФИО:</label>
+                    <div class="col-sm-10">
+                        <a class="text-link text-blue" th:href="'/composers/' + ${composer.getId()}"
+                           th:text="${composer.getComposersFio()}" id="composerfio"></a>
+                    </div>
+                </div>
+                <div class="mb-2 row">
+                    <label for="composer_position" class="col-sm-2 col-form-label">Позиция</label>
+                    <div class="col-sm-10">
+                        <p th:text="${composer.getPosition()}" class="form-control-plaintext" id="composer_position">
+                    </div>
+                </div>
+            </div>
+        </form>
+        <hr class="hr"/>
+        <div class="mt-2">
+            <form method="POST" th:object="${filmSearchForm}" th:action="@{/directors/search/film}">
+                <a sec:authorize="isAuthenticated() && !hasRole('USER')" class="btn btn-primary"
+                   th:href="'/films/add-director/' + ${film.getId()}">Добавить режиссера</a>
+                <a sec:authorize="isAuthenticated() && !hasRole('USER')" class="btn btn-primary"
+                   th:href="'/films/add-composer/' + ${film.getId()}">Добавить композитора</a>
+                <input type="hidden" name="filmTitle"
+                       th:value="${film.getFilmTitle()}">
+                <a sec:authorize="!hasRole('ADMIN')" class="btn btn-primary"
+                   th:href="'/rent/film/' + ${film.id}">Арендовать фильм</a>
+                <button type="button" class="btn btn-secondary" onclick="window.history.back()">Назад</button>
+            </form>
         </div>
-      </div>
-      <div class="mb-2 row">
-        <label for="genre" class="col-sm-2 col-form-label">Жанр:</label>
-        <div class="col-sm-10">
-          <p th:text="${film.getGenre().getGenreTextDisplay()}" class="form-control-plaintext" id="genre">
-        </div>
-      </div>
-      <!--            <div class="mb-2 row">-->
-      <!--                <label class="col-sm-2 col-form-label">Онлайн копия:</label>-->
-      <!--                <div class="col-sm-10">-->
-      <!--                    <a class="text-link text-blue" th:if="${book.getOnlineCopyPath()} != null" th:href="@{|/books/download?bookId=${book.id}|}">-->
-      <!--                        <span>Скачать книгу</span>-->
-      <!--                    </a>-->
-      <!--                </div>-->
-      <!--            </div>-->
-      <div class="mb-2 row">
-        <label for="date" class="col-sm-2 col-form-label">Дата выхода:</label>
-        <div class="col-sm-10">
-          <p th:text="${film.getPremierYear()}" class="form-control-plaintext" id="date">
-        </div>
-      </div>
-      <div class="mb-2 row">
-        <label for="country" class="col-sm-2 col-form-label">Страна</label>
-        <div class="col-sm-10">
-          <p th:text="${film.getCountry()}" class="form-control-plaintext" id="country">
-        </div>
-      </div>
-    </form>
-    <hr class="hr"/>
-    <form class="row g-1">
-      <h4 class="mt-3 mb-3" th:text="'Информация об режиссере(ах)'"></h4>
-      <div th:each="director : ${film.getDirectors()}">
-        <div class="mb-2 row">
-          <label for="fio" class="col-sm-2 col-form-label">ФИО:</label>
-          <div class="col-sm-10">
-            <a class="text-link text-blue" th:href="'/directors/' + ${director.getId()}" th:text="${director.getDirectorsFio()}" id="fio"></a>
-          </div>
-        </div>
-        <div class="mb-2 row">
-          <label for="position" class="col-sm-2 col-form-label">Позиция</label>
-          <div class="col-sm-10">
-            <p th:text="${director.getPosition()}" class="form-control-plaintext" id="position">
-          </div>
-        </div>
-      </div>
-    </form>
-    <hr class="hr"/>
-    <div class="mt-2">
-      <a th:if="" sec:authorize="!hasRole('ADMIN')" class="btn btn-primary"
-         th:href="'/publish/get-film/' + ${film.id}">Арендовать фильм</a>
-      <button type="button" class="btn btn-secondary" onclick="window.history.back()">Назад</button>
     </div>
-  </div>
 </form>
 </body>
 </html>

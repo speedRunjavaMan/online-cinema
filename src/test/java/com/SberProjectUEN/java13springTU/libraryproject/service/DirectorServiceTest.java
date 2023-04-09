@@ -39,7 +39,7 @@ public class DirectorServiceTest
     }
     
     @Test
-    @Order(1)
+    @Order(9)
     @Override
     protected void getAll() {
         Mockito.when(repository.findAll()).thenReturn(DirectorTestData.DIRECTOR_LIST);
@@ -55,9 +55,9 @@ public class DirectorServiceTest
     protected void getOne() {
         Mockito.when(repository.findById(1L)).thenReturn(Optional.of(DirectorTestData.DIRECTOR_1));
         Mockito.when(mapper.toDTO(DirectorTestData.DIRECTOR_1)).thenReturn(DirectorTestData.DIRECTOR_DTO_1);
-        DirectorDTO authorDTO = service.getOne(1L);
-        log.info("Testing getOne(): " + authorDTO);
-        assertEquals(DirectorTestData.DIRECTOR_DTO_1, authorDTO);
+        DirectorDTO directorDTO = service.getOne(1L);
+        log.info("Testing getOne(): " + directorDTO);
+        assertEquals(DirectorTestData.DIRECTOR_DTO_1, directorDTO);
     }
     
     @Order(3)
@@ -129,22 +129,23 @@ public class DirectorServiceTest
         Mockito.when(repository.findById(1L)).thenReturn(Optional.of(DirectorTestData.DIRECTOR_1));
         Mockito.when(service.getOne(1L)).thenReturn(DirectorTestData.DIRECTOR_DTO_1);
         Mockito.when(repository.save(DirectorTestData.DIRECTOR_1)).thenReturn(DirectorTestData.DIRECTOR_1);
-        ((DirectorService) service).addFilm(new AddFilmDTO(1L, 1L));
+        ((DirectorService) service).addFilm(new AddFilmDTO(1L, 1L, 1L));
         log.info("Testing addFilm(): " + DirectorTestData.DIRECTOR_DTO_1.getFilmsIds());
         assertTrue(DirectorTestData.DIRECTOR_DTO_1.getFilmsIds().size() >= 1);
     }
     
-    @Order(9)
+    @Order(1)
     @Test
     protected void getAllNotDeleted() {
         DirectorTestData.DIRECTOR_3.setDeleted(true);
-        List<Director> directors = DirectorTestData.DIRECTOR_LIST.stream().filter(Predicate.not(Director::isDeleted)).toList();
-        Mockito.when(repository.findAllByIsDeletedFalse()).thenReturn(directors);
-        Mockito.when(mapper.toDTOs(directors)).thenReturn(
+        List<Director> notDeletedDirectors = DirectorTestData.DIRECTOR_LIST.stream().filter(Predicate.not(Director::isDeleted)).toList();
+        Mockito.when(repository.findAllByIsDeletedFalse()).thenReturn(notDeletedDirectors);
+        DirectorTestData.DIRECTOR_DTO_3_DELETED.setDeleted(true);
+        Mockito.when(mapper.toDTOs(notDeletedDirectors)).thenReturn(
                 DirectorTestData.DIRECTOR_DTO_LIST.stream().filter(Predicate.not(DirectorDTO::isDeleted)).toList());
         List<DirectorDTO> directorDTOS = service.listAllNotDeleted();
         log.info("Testing getAllNotDeleted(): " + directorDTOS);
-        assertEquals(directors.size(), directorDTOS.size());
+        assertEquals(notDeletedDirectors.size(), directorDTOS.size());
     }
     
 }

@@ -8,8 +8,9 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class AddFilmDTO {
+public class AddComposerDTO {
     Long filmId;
-    Long directorId;
     Long composerId;
 }
+
+

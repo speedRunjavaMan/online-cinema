@@ -5,33 +5,33 @@
       lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Просмотр режиссера</title>
+  <title>Просмотр композитора</title>
 </head>
 <body>
 <form layout:fragment="content">
   <div class="mt-3">
-    <h3 th:text="'Информация о режиссере: ' + ${director.getDirectorsFio()}"></h3>
+    <h3 th:text="'Информация о композиторе: ' + ${composer.getComposersFio()}"></h3>
     <form class="row g-1">
       <div class="mb-2 row">
-        <label for="directorsFio" class="col-sm-2 col-form-label no-border">ФИО:</label>
+        <label for="composersFio" class="col-sm-2 col-form-label no-border">ФИО:</label>
         <div class="col-sm-10">
-          <p th:text="${director.getDirectorsFio()}" class="form-control-plaintext" id="directorsFio">
+          <p th:text="${composer.getComposersFio()}" class="form-control-plaintext" id="composersFio">
         </div>
       </div>
       <div class="mb-2 row">
         <label for="position" class="col-sm-2 col-form-label">Позиция:</label>
         <div class="col-sm-10">
-          <p th:text="${director.getPosition()}" class="form-control-plaintext" id="position">
+          <p th:text="${composer.getPosition()}" class="form-control-plaintext" id="position">
         </div>
       </div>
     </form>
     <hr class="hr"/>
     <div class="mt-2">
-      <form method="POST" th:object="${directorSearchForm}" th:action="@{/films/search/director}">
+      <form method="POST" th:object="${composerSearchForm}" th:action="@{/films/search/composer}">
         <a sec:authorize="isAuthenticated() && !hasRole('USER')" class="btn btn-primary"
-           th:href="'/directors/add-film/' + ${director.getId()}">Добавить фильм</a>
-        <input type="hidden" name="directorsFio"
-               th:value="${director.getDirectorsFio()}">
+           th:href="'/composers/add-film/' + ${composer.getId()}">Добавить фильм</a>
+        <input type="hidden" name="composersFio"
+               th:value="${composer.getComposersFio()}">
         <button type="submit" class="btn btn-success">Посмотреть фильмы</button>
         <button type="button" class="btn btn-secondary" onclick="window.history.back()">Назад</button>
       </form>

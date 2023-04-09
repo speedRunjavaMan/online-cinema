@@ -54,7 +54,7 @@
 //                .authorizeHttpRequests(auth -> auth
 //                        .requestMatchers(RESOURCES_WHITE_LIST.toArray(String[]::new)).permitAll()
 //                        .requestMatchers(USERS_REST_WHITE_LIST.toArray(String[]::new)).permitAll()
-//                        .requestMatchers("/authors/**").hasAnyRole(ADMIN, LIBRARIAN)
+//                        .requestMatchers("/directors/**").hasAnyRole(ADMIN, LIBRARIAN)
 //                        .anyRequest().authenticated()
 //                )
 //                .exceptionHandling()
@@ -77,4 +77,4 @@
 //        return authenticationConfiguration.getAuthenticationManager();
 //    }
 //}
-
+//
