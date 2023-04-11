@@ -29,3 +29,4 @@ public interface FilmRentInfoData {
 
     List<FilmRentInfo> FILM_RENT_INFO_LIST = List.of(FILM_RENT_INFO);
 }
+//
