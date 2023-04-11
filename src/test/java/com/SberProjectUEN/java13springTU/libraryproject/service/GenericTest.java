@@ -40,3 +40,4 @@ public abstract class GenericTest<E extends GenericModel, D extends GenericDTO> 
     
     protected abstract void getAllNotDeleted();
 }
+//

@@ -147,5 +147,5 @@ public class DirectorServiceTest
         log.info("Testing getAllNotDeleted(): " + directorDTOS);
         assertEquals(notDeletedDirectors.size(), directorDTOS.size());
     }
-    
 }
+//

@@ -47,3 +47,4 @@ public class FilmRentInfoServiceTest extends GenericTest<FilmRentInfo, FilmRentI
     
     }
 }
+//
