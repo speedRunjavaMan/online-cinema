@@ -1,11 +1,11 @@
 package com.SberProjectUEN.java13springTU;
 
-import com.SberProjectUEN.java13springTU.libraryproject.dto.ComposerDTO;
-import com.SberProjectUEN.java13springTU.libraryproject.dto.DirectorDTO;
-import com.SberProjectUEN.java13springTU.libraryproject.dto.FilmDTO;
-import com.SberProjectUEN.java13springTU.libraryproject.dto.FilmWithDirectorsDTO;
-import com.SberProjectUEN.java13springTU.libraryproject.model.Film;
-import com.SberProjectUEN.java13springTU.libraryproject.model.Genre;
+import com.SberProjectUEN.java13springTU.onlinecinemaproject.dto.ComposerDTO;
+import com.SberProjectUEN.java13springTU.onlinecinemaproject.dto.DirectorDTO;
+import com.SberProjectUEN.java13springTU.onlinecinemaproject.dto.FilmDTO;
+import com.SberProjectUEN.java13springTU.onlinecinemaproject.dto.FilmWithDirectorsDTO;
+import com.SberProjectUEN.java13springTU.onlinecinemaproject.model.Film;
+import com.SberProjectUEN.java13springTU.onlinecinemaproject.model.Genre;
 
 import java.time.LocalDate;
 import java.util.Arrays;

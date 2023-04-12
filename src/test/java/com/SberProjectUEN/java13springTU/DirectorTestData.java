@@ -1,7 +1,7 @@
 package com.SberProjectUEN.java13springTU;
 
-import com.SberProjectUEN.java13springTU.libraryproject.dto.DirectorDTO;
-import com.SberProjectUEN.java13springTU.libraryproject.model.Director;
+import com.SberProjectUEN.java13springTU.onlinecinemaproject.dto.DirectorDTO;
+import com.SberProjectUEN.java13springTU.onlinecinemaproject.model.Director;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;

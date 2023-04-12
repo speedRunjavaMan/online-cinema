@@ -1,7 +1,7 @@
 package com.SberProjectUEN.java13springTU;
 
-import com.SberProjectUEN.java13springTU.libraryproject.dto.FilmRentInfoDTO;
-import com.SberProjectUEN.java13springTU.libraryproject.model.FilmRentInfo;
+import com.SberProjectUEN.java13springTU.onlinecinemaproject.dto.FilmRentInfoDTO;
+import com.SberProjectUEN.java13springTU.onlinecinemaproject.model.FilmRentInfo;
 
 import java.time.LocalDateTime;
 import java.util.List;

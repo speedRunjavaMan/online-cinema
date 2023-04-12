@@ -1,9 +1,9 @@
 package com.SberProjectUEN.java13springTU;
 
-import com.SberProjectUEN.java13springTU.libraryproject.dto.RoleDTO;
-import com.SberProjectUEN.java13springTU.libraryproject.dto.UserDTO;
-import com.SberProjectUEN.java13springTU.libraryproject.model.Role;
-import com.SberProjectUEN.java13springTU.libraryproject.model.User;
+import com.SberProjectUEN.java13springTU.onlinecinemaproject.dto.RoleDTO;
+import com.SberProjectUEN.java13springTU.onlinecinemaproject.dto.UserDTO;
+import com.SberProjectUEN.java13springTU.onlinecinemaproject.model.Role;
+import com.SberProjectUEN.java13springTU.onlinecinemaproject.model.User;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
