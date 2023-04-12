@@ -1,6 +1,6 @@
 package com.SberProjectUEN.java13springTU.dbexample.model;
 
-import com.SberProjectUEN.java13springTU.libraryproject.model.GenericModel;
+import com.SberProjectUEN.java13springTU.onlinecinemaproject.model.GenericModel;
 import lombok.*;
 
 import java.util.Date;

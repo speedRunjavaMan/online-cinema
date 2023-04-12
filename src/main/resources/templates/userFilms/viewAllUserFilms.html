@@ -35,7 +35,7 @@
         <td th:text="${#temporals.format(rent.getRentDate().plusDays(rent.getRentPeriod()), 'dd-MM-yyyy')}"></td>
         <td>
                     <span th:if="${rent.getReturned()}"
-                           th:text="${#temporals.format(rent.getReturnDate(), 'dd-MM-yyyy')}"></span>
+                          th:text="${#temporals.format(rent.getReturnDate(), 'dd-MM-yyyy')}"></span>
         </td>
         <td th:text="${rent.getReturned()} ? 'Да' : 'Нет'"></td>
         <td th:text="${rent.getRentPeriod()} + ' дней'"></td>
@@ -78,6 +78,5 @@
     </ul>
   </nav>
 </div>
-
 </body>
 </html>

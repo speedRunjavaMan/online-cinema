@@ -26,7 +26,7 @@
           <select class="form-select" name="genre" id="genre" required th:object="${film}" th:field="*{genre}">
             <option th:value="default">Выберете жанр из списка</option>
             <option th:selected="${film.getGenre().getGenreTextDisplay()}"
-                    th:each="genre : ${T(com.SberProjectUEN.java13springTU.libraryproject.model.Genre).values()}"
+                    th:each="genre : ${T(com.SberProjectUEN.java13springTU.onlinecinemaproject.model.Genre).values()}"
                     th:value="${genre}" th:text="${genre.getGenreTextDisplay()}"></option>
           </select>
           <label for="genre">Жанр</label>

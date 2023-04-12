@@ -31,7 +31,7 @@
         </Root>
 
         <!-- LOG "com.*" at TRACE level -->
-        <Logger name="com.SberProjectUEN.java13springTU.libraryproject" level="error, info"></Logger>
+        <Logger name="com.SberProjectUEN.java13springTU.onlinecinemaproject" level="error, info"></Logger>
     </Loggers>
 
 </Configuration>

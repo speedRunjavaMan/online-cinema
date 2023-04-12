@@ -1,7 +1,7 @@
 package com.SberProjectUEN.java13springTU;
 
-import com.SberProjectUEN.java13springTU.libraryproject.dto.ComposerDTO;
-import com.SberProjectUEN.java13springTU.libraryproject.model.Composer;
+import com.SberProjectUEN.java13springTU.onlinecinemaproject.dto.ComposerDTO;
+import com.SberProjectUEN.java13springTU.onlinecinemaproject.model.Composer;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
