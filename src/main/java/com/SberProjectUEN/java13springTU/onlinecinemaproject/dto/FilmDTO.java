@@ -41,7 +41,8 @@ public class FilmDTO
     filmDTO.setGenre(film.getGenre());
     filmDTO.setCountry(film.getCountry());
     filmDTO.setId(film.getId());
-    //filmDTO.setPageCount(film.getPageCount());
+    filmDTO.setAverageGrade(film.getAverageGrade());
+    filmDTO.setAmountGrades(film.getAmountGrades());
     filmDTO.setPremierYear(film.getPremierYear().toString());
     Set<Director> directors = film.getDirectors();
     Set<Long> directorIds = new HashSet<>();

@@ -140,7 +140,7 @@
                                th:href="'/rent/film/' + ${film.id}">Арендовать фильм</a>
                             <a sec:authorize="isAuthenticated() && !(hasRole('ADMIN') || hasRole('LIBRARIAN'))"
                                class="btn btn-sm btn-outline-success"
-                               th:href="'films/rate/film/' + ${film.id}">Оценить</a>
+                               th:href="'/rate/film/' + ${film.id}">Оценить</a>
                         </div>
                     </td>
                 </tr>

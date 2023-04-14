@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layout}"
+      lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Мои оценки</title>
+</head>
+<body>
+<div layout:fragment="content">
+  <div class="mt-5">
+    <h1>Мои оценки фильмов</h1>
+    <table class="table table-hover mt-3">
+      <thead>
+      <tr>
+        <th scope="col">Фильм</th>
+        <th scope="col">Дата оценки</th>
+        <th scope="col">Время оценки</th>
+        <th scope="col">Оценка</th>
+        <th scope="col"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="rate: ${rateFilms}">
+        <td>
+                    <span th:if="${!rate.getFilmDTO().isDeleted()}">
+                     <a class="text-link text-blue" th:href="'/films/' + ${rate.getFilmDTO().getId()}" th:text="${rate.getFilmDTO().getFilmTitle()}"></a>
+                    </span>
+          <span th:unless="${!rate.getFilmDTO().isDeleted()}" th:text="${rate.getFilmDTO().getFilmTitle()}"></span>
+        </td>
+        <td th:text="${#temporals.format(rate.getRateDate(), 'dd-MM-yyyy')}"></td>
+        <td th:text="${#temporals.format(rate.getRateDate(), 'HH:mm:ss')}"></td>
+        <td th:text="${rate.getRate()} + ' из 5'"></td>
+        <td>
+          <a sec:authorize="isAuthenticated() && (hasRole('USER'))"
+              th:if="!${rate.getReturned()}"
+                  th:href="'/rate/film/' + ${rate.getFilmId()}"
+                  class="btn btn-sm btn-outline-success"
+                  role="button"
+                  aria-disabled="true">Изменить оценку</a>
+          <a sec:authorize="isAuthenticated() && (hasRole('USER'))"
+             th:if="!${rate.getReturned()}"
+             th:href="'/rate/delete/' + ${rate.getId()}"
+             class="btn btn-sm btn-outline-danger"
+             role="button"
+             aria-disabled="true">Удалить оценку</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <button sec:authorize="isAuthenticated() && (hasRole('ADMIN'))" type="button" class="btn btn-secondary" onclick="window.history.back()">Назад</button>
+  </div>
+  <nav aria-label="Pagination" th:if="${rateFilms.totalPages gt 0}">
+    <ul class="pagination justify-content-center font-weight-bold">
+      <li class="page-item" th:classappend="${rateFilms.number eq 0} ? 'disabled'">
+        <a class="page-link"
+           th:href="'/rate/user-films/' + (${#authentication.getPrincipal().getUsername().equalsIgnoreCase('ADMIN')}
+                   ? ${userId} : ${#authentication.getPrincipal().getUserId()}) + '?page=' + ${rateFilms.number lt 2 ? 1 : rateFilms.number}"
+           aria-label="Previous" title="Previous Page" data-toggle="tooltip">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      <li class="page-item"
+          th:each="i : ${#numbers.sequence(1, rateFilms.totalPages, 1)}"
+          th:classappend="${i eq rateFilms.number + 1} ? 'active'">
+        <a class="page-link" th:href="'/rate/user-films/' + (${#authentication.getPrincipal().getUsername().equalsIgnoreCase('ADMIN')}
+                   ? ${userId} : ${#authentication.getPrincipal().getUserId()}) + '?page=' + ${i}" th:text="${i}"
+           th:title="${'Page '+ i}" data-toggle="tooltip"></a>
+      </li>
+      <li class="page-item" th:classappend="${rateFilms.number eq rateFilms.totalPages - 1} ? 'disabled'">
+        <a class="page-link"
+           th:href="'/rate/user-films/' + (${#authentication.getPrincipal().getUsername().equalsIgnoreCase('ADMIN')}
+                   ? ${userId} : ${#authentication.getPrincipal().getUserId()}) + '?page=' + ${rateFilms.number + 2}"
+           aria-label="Next" title="Next Page" data-toggle="tooltip">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>
+</body>
+</html>
+

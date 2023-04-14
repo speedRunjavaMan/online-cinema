@@ -20,14 +20,14 @@ public interface SecurityConstants {
 
         public static List<String> DIRECTORS_PERMISSION_LIST = List.of("/rest/directors/add",
                 "/rest/directors/update",
-//                                                                     "/rest/directors/delete/**",
-                "/rest/directors/delete/{id}"
+//                                                                     "/rest/directors/deleteSoft/**",
+                "/rest/directors/deleteSoft/{id}"
         );
 
         public static List<String> FILMS_PERMISSION_LIST = List.of("/rest/films/add",
                 "/rest/films/update",
-                "/rest/films/delete/**",
-                "/rest/films/delete/{id}",
+                "/rest/films/deleteSoft/**",
+                "/rest/films/deleteSoft/{id}",
                 "/rest/films/download/{bookId}");
 
         public static List<String> USERS_PERMISSION_LIST = List.of("/rest/rent/film/*");
@@ -57,14 +57,14 @@ public interface SecurityConstants {
 
     List<String> FILMS_PERMISSION_LIST = List.of("/films/add",
                                                  "/films/update",
-                                                 "/films/delete",
+                                                 "/films/deleteSoft",
                                                  "/films/download/{filmId}");
     List<String> DIRECTORS_PERMISSION_LIST = List.of("/directors/add",
                                                      "/directors/update",
-                                                     "/directors/delete");
+                                                     "/directors/deleteSoft");
     List<String> COMPOSERS_PERMISSION_LIST = List.of("/composers/add",
                                                      "/composers/update",
-                                                     "/composers/delete");
+                                                     "/composers/deleteSoft");
 
     List<String> USERS_WHITE_LIST = List.of("/login",
                                             "/users/registration",

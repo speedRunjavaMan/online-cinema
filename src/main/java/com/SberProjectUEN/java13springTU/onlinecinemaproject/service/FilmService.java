@@ -4,6 +4,7 @@ import com.SberProjectUEN.java13springTU.onlinecinemaproject.constants.Errors;
 import com.SberProjectUEN.java13springTU.onlinecinemaproject.dto.*;
 import com.SberProjectUEN.java13springTU.onlinecinemaproject.exception.MyDeleteException;
 import com.SberProjectUEN.java13springTU.onlinecinemaproject.mapper.FilmMapper;
+
 import com.SberProjectUEN.java13springTU.onlinecinemaproject.mapper.FilmWithDirectorsMapper;
 import com.SberProjectUEN.java13springTU.onlinecinemaproject.model.Film;
 import com.SberProjectUEN.java13springTU.onlinecinemaproject.repository.FilmRepository;
@@ -25,13 +26,13 @@ import java.util.Set;
 @Slf4j
 public class FilmService
         extends GenericService<Film, FilmDTO> {
-    //  Инжектим конкретный репозиторий для работы с таблицей books
+    //  Инжектим конкретный репозиторий для работы с таблицей films
     private final FilmRepository repository;
     private final FilmWithDirectorsMapper filmWithDirectorsMapper;
-    //    private final DirectorService directorService;
+//    private final FilmRateMapper filmRateMapper;
     protected FilmService(FilmRepository repository,
                           FilmMapper mapper,
-//                          DirectorService directorService,
+//                          FilmRateMapper filmRateMapper,
                           FilmWithDirectorsMapper filmWithDirectorsMapper
     ) {
         //Передаем этот репозиторий в абстрактный сервис,
@@ -39,7 +40,7 @@ public class FilmService
         super(repository, mapper);
         this.repository = repository;
         this.filmWithDirectorsMapper = filmWithDirectorsMapper;
-//        this.directorService = directorService;
+//        this.filmRateMapper = filmRateMapper;
     }
 
     public FilmDTO addDirectorToFilm(Long filmId, Long directorId) {
@@ -51,13 +52,11 @@ public class FilmService
     }
     public void addDirector(AddDirectorDTO addDirectorDTO) {
         FilmDTO film = getOne(addDirectorDTO.getFilmId());
-//        directorService.getOne(addDirectorDTO.getDirectorId());
         film.getDirectorsIds().add(addDirectorDTO.getDirectorId());
         update(film);
     }
     public void addComposer(AddComposerDTO addComposerDTO) {
         FilmDTO film = getOne(addComposerDTO.getFilmId());
-//        composerService.getOne(addComposerDTO.getComposerId());
         film.getComposersIds().add(addComposerDTO.getComposerId());
         update(film);
     }
@@ -91,8 +90,8 @@ public class FilmService
         return new PageImpl<>(result, pageable, filmsPaginated.getTotalElements());
     }
 
-    // files/books/year/month/day/file_name_{id}_{created_when}.txt
-    // files/книга_id.pdf
+    // files/films/year/month/day/file_name_{id}_{created_when}.txt
+    // files/фильм_id.pdf
     public FilmDTO create(final FilmDTO object,
                           MultipartFile file)
     {
@@ -112,7 +111,7 @@ public class FilmService
     }
 
     @Override
-    public void delete(Long id) throws MyDeleteException {
+    public void deleteSoft(Long id) throws MyDeleteException {
         Film film = repository.findById(id).orElseThrow(
                 () -> new NotFoundException("Фильма с заданным ID=" + id + " не существует"));
 //        boolean filmCanBeDeleted = repository.findFilmByIdAndFilmRentInfosReturnedFalseAndIsDeletedFalse(id) == null;
@@ -136,15 +135,15 @@ public class FilmService
         film.setDeletedBy(null);
         repository.save(film);
     }
-    public FilmDTO rateFilm(FilmWithDirectorsDTO rateFilmDTO) {
-        FilmDTO filmDTO = super.getOne(rateFilmDTO.getId());
-        long rateAmount = rateFilmDTO.getAmountGrades() != null ? rateFilmDTO.getAmountGrades() + 1 : 1L;
-        double rateAverageGrade = rateFilmDTO.getAverageGrade() != null ? rateFilmDTO.getAverageGrade() : 1D;
-        rateFilmDTO.setAmountGrades((int)rateAmount);
-        rateFilmDTO.setAverageGrade(rateAverageGrade/rateAmount);
-        rateFilmDTO.setCreatedWhen(LocalDateTime.now());
-        rateFilmDTO.setCreatedBy(SecurityContextHolder.getContext().getAuthentication().getName());
-        super.update(filmDTO);
-        return mapper.toDTO(repository.save(mapper.toEntity(rateFilmDTO)));
-    }
+//    public FilmRateDTO rateFilm(FilmRateDTO rateFilmDTO) {
+//        FilmDTO filmDTO = this.getOne(rateFilmDTO.getFilmId());
+//        this.update(filmDTO);
+//        long rateAmount = rateFilmDTO.getAmountGrades() != null ? rateFilmDTO.getAmountGrades() + 1 : 1L;
+//        double rateAverageGrade = rateFilmDTO.getAverageGrade() != null ? rateFilmDTO.getAverageGrade() : 1D;
+//        rateFilmDTO.setAmountGrades((int)rateAmount);
+//        rateFilmDTO.setAverageGrade(rateAverageGrade/rateAmount);
+//        rateFilmDTO.setCreatedWhen(LocalDateTime.now());
+//        rateFilmDTO.setCreatedBy(SecurityContextHolder.getContext().getAuthentication().getName());
+//        return filmRateMapper.toDTO(repository.save(mapper.toEntity(rateFilmDTO)));
+//    }
 }

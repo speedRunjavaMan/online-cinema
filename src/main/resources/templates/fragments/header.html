@@ -24,6 +24,9 @@
           <li sec:authorize="isAuthenticated() && (hasRole('USER'))" class="nav-link">
             <a class="nav-link" aria-current="page" th:href="'/rent/user-films/' + ${#authentication.getPrincipal().getUserId()}">Мои фильмы</a>
           </li>
+          <li sec:authorize="isAuthenticated() && (hasRole('USER'))" class="nav-link">
+            <a class="nav-link" aria-current="page" th:href="'/rate/user-films/' + ${#authentication.getPrincipal().getUserId()}">Мои оценки</a>
+          </li>
           <li sec:authorize="isAuthenticated() && (hasRole('ADMIN') || hasRole('LIBRARIAN'))" class="nav-link">
             <a class="nav-link" aria-current="page" href="/users/list">Пользователи</a>
           </li>

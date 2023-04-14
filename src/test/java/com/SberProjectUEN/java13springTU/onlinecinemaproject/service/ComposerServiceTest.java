@@ -92,9 +92,9 @@ public class ComposerServiceTest
 //        Mockito.when(composerRepository.checkComposerForDeletion(2L)).thenReturn(false);
         Mockito.when(repository.save(ComposerTestData.COMPOSER_1)).thenReturn(ComposerTestData.COMPOSER_1);
         Mockito.when(repository.findById(1L)).thenReturn(Optional.of(ComposerTestData.COMPOSER_1));
-        log.info("Testing delete() before: " + ComposerTestData.COMPOSER_1.isDeleted());
-        service.delete(1L);
-        log.info("Testing delete() after: " + ComposerTestData.COMPOSER_1.isDeleted());
+        log.info("Testing deleteSoft() before: " + ComposerTestData.COMPOSER_1.isDeleted());
+        service.deleteSoft(1L);
+        log.info("Testing deleteSoft() after: " + ComposerTestData.COMPOSER_1.isDeleted());
         assertTrue(ComposerTestData.COMPOSER_1.isDeleted());
     }
 

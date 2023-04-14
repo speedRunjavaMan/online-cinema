@@ -53,7 +53,7 @@ public class DirectorService
     }
 
     @Override
-    public void delete(Long objectId) throws MyDeleteException {
+    public void deleteSoft(Long objectId) throws MyDeleteException {
         Director director = directorRepository.findById(objectId).orElseThrow(
                 () -> new NotFoundException("Режиссера с заданным id=" + objectId + " не существует."));
         boolean directorCanBeDeleted = directorRepository.checkDirectorForDeletion(objectId);

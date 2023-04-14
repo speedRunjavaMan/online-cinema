@@ -119,7 +119,7 @@ public class MVCDirectorController {
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id) throws MyDeleteException {
-        directorService.delete(id);
+        directorService.deleteSoft(id);
         return "redirect:/directors";
     }
 

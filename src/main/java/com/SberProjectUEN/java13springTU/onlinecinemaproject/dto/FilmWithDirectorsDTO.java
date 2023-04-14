@@ -16,8 +16,7 @@ public class FilmWithDirectorsDTO
         this.directors = directors;
         this.composers = composers;
     }
-    private Double averageGrade;
-    private Integer amountGrades;
+
     private Set<DirectorDTO> directors;
     private Set<ComposerDTO> composers;
 }

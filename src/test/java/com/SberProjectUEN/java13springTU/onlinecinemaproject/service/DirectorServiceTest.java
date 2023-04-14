@@ -92,9 +92,9 @@ public class DirectorServiceTest
 //        Mockito.when(directorRepository.checkDirectorForDeletion(2L)).thenReturn(false);
         Mockito.when(repository.save(DirectorTestData.DIRECTOR_1)).thenReturn(DirectorTestData.DIRECTOR_1);
         Mockito.when(repository.findById(1L)).thenReturn(Optional.of(DirectorTestData.DIRECTOR_1));
-        log.info("Testing delete() before: " + DirectorTestData.DIRECTOR_1.isDeleted());
-        service.delete(1L);
-        log.info("Testing delete() after: " + DirectorTestData.DIRECTOR_1.isDeleted());
+        log.info("Testing deleteSoft() before: " + DirectorTestData.DIRECTOR_1.isDeleted());
+        service.deleteSoft(1L);
+        log.info("Testing deleteSoft() after: " + DirectorTestData.DIRECTOR_1.isDeleted());
         assertTrue(DirectorTestData.DIRECTOR_1.isDeleted());
     }
     

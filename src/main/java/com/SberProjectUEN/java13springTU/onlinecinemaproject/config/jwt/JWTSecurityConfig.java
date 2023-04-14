@@ -1,6 +1,6 @@
-//package com.SberProjectUEN.java13springTU.libraryproject.config.jwt;
+//package com.SberProjectUEN.java13springTU.onlinecinemaproject.config.jwt;
 //
-//import com.SberProjectUEN.java13springTU.libraryproject.service.userdetails.CustomUserDetailsService;
+//import com.SberProjectUEN.java13springTU.onlinecinemaproject.service.userdetails.CustomUserDetailsService;
 //import jakarta.servlet.http.HttpServletResponse;
 //import org.springframework.context.annotation.Bean;
 //import org.springframework.context.annotation.Configuration;
@@ -18,9 +18,9 @@
 //
 //import java.util.Arrays;
 //
-//import static com.SberProjectUEN.java13springTU.libraryproject.constants.SecurityConstants.*;
-//import static com.SberProjectUEN.java13springTU.libraryproject.constants.UserRolesConstants.ADMIN;
-//import static com.SberProjectUEN.java13springTU.libraryproject.constants.UserRolesConstants.LIBRARIAN;
+//import static com.SberProjectUEN.java13springTU.onlinecinemaproject.constants.SecurityConstants.*;
+//import static com.SberProjectUEN.java13springTU.onlinecinemaproject.constants.UserRolesConstants.ADMIN;
+//import static com.SberProjectUEN.java13springTU.onlinecinemaproject.constants.UserRolesConstants.LIBRARIAN;
 //
 //@Configuration
 //@EnableWebSecurity

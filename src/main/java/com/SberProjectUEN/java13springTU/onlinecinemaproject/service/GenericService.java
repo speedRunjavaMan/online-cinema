@@ -97,11 +97,33 @@ public abstract class GenericService<T extends GenericModel, N extends GenericDT
     }
 
     /***
-     * Удаление сущности из БД.
+     * Софт Удаление сущности (пометка на удаление).
+     *
+     * @param id - идентификатор сущности, которая должна быть помечена на удаление.
+     */
+    public void deleteSoft(Long id) throws MyDeleteException {
+        T obj = repository.findById(id).orElseThrow(() -> new NotFoundException("Объект не найден с айди: " + id));
+        markAsDeleted(obj);
+        repository.save(obj);
+    }
+
+    /**
+     * Восстановление помеченной записи, как удаленной.
+     *
+     * @param id - идентификатор сущности, которая должна быть восстановлена
+     */
+    public void restore(Long id) {
+        T obj = repository.findById(id).orElseThrow(() -> new NotFoundException("Объект не найден с айди: " + id));
+        unMarkAsDeleted(obj);
+        repository.save(obj);
+    }
+
+    /***
+     * Хард Удаление сущности из БД.
      *
      * @param id - идентификатор сущности, которая должна быть удалена.
      */
-    public void delete(Long id) throws MyDeleteException {
+    public void deleteHard(Long id) throws MyDeleteException {
         repository.deleteById(id);
     }
 
@@ -117,5 +139,7 @@ public abstract class GenericService<T extends GenericModel, N extends GenericDT
         genericModel.setDeletedBy(null);
     }
 }
+
+
 
 

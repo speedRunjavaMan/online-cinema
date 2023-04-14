@@ -53,7 +53,7 @@ public class ComposerService
     }
 
     @Override
-    public void delete(Long objectId) throws MyDeleteException {
+    public void deleteSoft(Long objectId) throws MyDeleteException {
         Composer composer = composerRepository.findById(objectId).orElseThrow(
                 () -> new NotFoundException("Композитора с заданным id=" + objectId + " не существует."));
         boolean composerCanBeDeleted = composerRepository.checkComposerForDeletion(objectId);

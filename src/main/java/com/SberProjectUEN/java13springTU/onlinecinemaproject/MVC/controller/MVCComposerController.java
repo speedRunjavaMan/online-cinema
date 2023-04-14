@@ -119,7 +119,7 @@ public class MVCComposerController {
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id) throws MyDeleteException {
-        composerService.delete(id);
+        composerService.deleteSoft(id);
         return "redirect:/composers";
     }
 

@@ -203,7 +203,7 @@ public class MVCUserController {
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id) throws MyDeleteException {
-        userService.delete(id);
+        userService.deleteSoft(id);
         return "redirect:/users/list";
     }
 

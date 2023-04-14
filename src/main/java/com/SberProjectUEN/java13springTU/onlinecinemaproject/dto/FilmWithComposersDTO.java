@@ -11,7 +11,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class FilmWithComposersDTO
         extends FilmDTO {
-    public FilmWithComposersDTO(Film film, Set<DirectorDTO> directors,Set<ComposerDTO> composers) {
+    public FilmWithComposersDTO(Film film, Set<DirectorDTO> directors, Set<ComposerDTO> composers) {
         super(film);
         this.directors = directors;
         this.composers = composers;

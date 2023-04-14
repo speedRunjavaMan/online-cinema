@@ -47,7 +47,7 @@ public class DirectorMapper
     protected void mapSpecificFields(Director source, DirectorDTO destination) {
         destination.setFilmsIds(getIds(source));
     }
-
+    @Override
     protected Set<Long> getIds(Director director) {
         return Objects.isNull(director) || Objects.isNull(director.getFilms())
                 ? null

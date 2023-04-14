@@ -12,6 +12,11 @@
     border-color: #3F0D35FF !important;
 }
 
+.btn-primary1 {
+    color: white !important;
+    background-color: #a2859c !important;
+    border-color: #6c5067 !important;
+}
 .btn-primary:hover {
     background-color: #3f0d35 !important;
     border-color: #3F0D35FF !important;

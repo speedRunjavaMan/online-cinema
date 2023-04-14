@@ -34,7 +34,7 @@ public abstract class GenericController<T extends GenericModel, N extends Generi
         this.service = service;
     }
 
-    //вернуть информацию о книге по переданному ID
+    //вернуть информацию о фильме по переданному ID
     @Operation(description = "Получить запись по ID", method = "getOneById")
     @RequestMapping(value = "/getOneById", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<N> getOneById(@RequestParam(value = "id") Long id) {
@@ -69,13 +69,13 @@ public abstract class GenericController<T extends GenericModel, N extends Generi
         return ResponseEntity.status(HttpStatus.CREATED).body(service.update(updatedEntity));
     }
 
-    //@RequestParam: localhost:9090/api/rest/books/deleteBook?id=1
-    //@PathVariable: localhost:9090/api/rest/books/deleteBook/1
+    //@RequestParam: localhost:9090/api/rest/films/deleteFilm?id=1
+    //@PathVariable: localhost:9090/api/rest/films/deleteFilm/1
     @SneakyThrows
-    @Operation(description = "Удалить запись по ID", method = "delete")
+    @Operation(description = "Удалить запись по ID", method = "deleteSoft")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
-    public void delete(@PathVariable(value = "id") Long id) {
-        service.delete(id);
+    public void deleteSoft(@PathVariable(value = "id") Long id) {
+        service.deleteSoft(id);
     }
 
     /*

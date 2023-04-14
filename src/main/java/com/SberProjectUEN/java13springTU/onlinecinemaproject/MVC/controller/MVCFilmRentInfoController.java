@@ -35,6 +35,7 @@ public class MVCFilmRentInfoController {
 
     @PostMapping("/film")
     public String rentFilm(@ModelAttribute("rentFilmForm") FilmRentInfoDTO rentFilmDTO) {
+        log.info(rentFilmDTO.toString());
         CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         rentFilmDTO.setUserId(Long.valueOf(customUserDetails.getUserId()));
         filmRentInfoService.rentFilm(rentFilmDTO);

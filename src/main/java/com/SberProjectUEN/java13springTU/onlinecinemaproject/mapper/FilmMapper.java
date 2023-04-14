@@ -61,7 +61,7 @@ public class FilmMapper
         destination.setDirectorsIds(getIds(source));
         destination.setComposersIds(getComposersIds(source));
     }
-
+    @Override
     protected Set<Long> getIds(Film film) {
         return Objects.isNull(film) || Objects.isNull(film.getDirectors())
                 ? null

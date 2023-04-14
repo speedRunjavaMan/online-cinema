@@ -5,7 +5,6 @@ import com.SberProjectUEN.java13springTU.onlinecinemaproject.exception.MyDeleteE
 import com.SberProjectUEN.java13springTU.onlinecinemaproject.service.ComposerService;
 import com.SberProjectUEN.java13springTU.onlinecinemaproject.service.DirectorService;
 import com.SberProjectUEN.java13springTU.onlinecinemaproject.service.FilmService;
-import com.SberProjectUEN.java13springTU.onlinecinemaproject.service.userdetails.CustomUserDetails;
 import io.swagger.v3.oas.annotations.Hidden;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -195,7 +194,7 @@ public class MVCFilmController {
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id) throws MyDeleteException {
-        filmService.delete(id);
+        filmService.deleteSoft(id);
         return "redirect:/films";
     }
 
@@ -204,22 +203,24 @@ public class MVCFilmController {
         filmService.restore(id);
         return "redirect:/films";
     }
-    @GetMapping("/rate/film/{filmId}")
-    public String rateFilm(@PathVariable Long filmId,
-                           Model model) {
-        model.addAttribute("film", filmService.getOne(filmId));
-        return "userFilms/rateFilm";
-    }
-
-    @PostMapping("/rateFilm")
-    public String rateFilm(@ModelAttribute("rateFilmForm") FilmWithDirectorsDTO rateFilmWithDirectorsDTO) {
+//    @GetMapping("/rate/film/{filmId}")
+//    public String rateFilm(@PathVariable Long filmId,
+//                           Model model) {
+//        model.addAttribute("film", filmService.getOne(filmId));
+//        return "userFilms/rateFilm";
+//    }
+//
+//    @PostMapping("/rate/film")
+//
+//    public String rateFilm(@ModelAttribute("rateFilmForm") FilmRateDTO filmRateDTO) {
+//        log.info(filmRateDTO.toString());
 //        CustomUserDetails customUserDetails = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        rateFilmWithDirectorsDTO.setUserId(Long.valueOf(customUserDetails.getUserId()));
-        filmService.rateFilm(rateFilmWithDirectorsDTO);
-//        return "redirect:/rate/user-films/" + customUserDetails.getUserId();
-//        return "redirect:films/viewAllFilms";
-        return "films/viewAllFilms";
-    }
+////        filmRateDTO.setUserId(Long.valueOf(customUserDetails.getUserId()));
+//        filmService.rateFilm(filmRateDTO);
+////        return "redirect:/rate/user-films/" + customUserDetails.getUserId();
+////        return "redirect:films/viewAllFilms";
+//        return "films/viewAllFilms";
+//    }
     @ExceptionHandler({MyDeleteException.class, AccessDeniedException.class})
     public RedirectView handleError(HttpServletRequest req,
                                     Exception ex,

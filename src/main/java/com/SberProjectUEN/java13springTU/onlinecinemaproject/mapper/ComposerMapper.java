@@ -47,7 +47,7 @@ public class ComposerMapper
     protected void mapSpecificFields(Composer source, ComposerDTO destination) {
         destination.setFilmsIds(getIds(source));
     }
-
+    @Override
     protected Set<Long> getIds(Composer composer) {
         return Objects.isNull(composer) || Objects.isNull(composer.getFilms())
                 ? null

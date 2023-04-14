@@ -102,7 +102,7 @@ public class UserService
         return ((UserRepository) repository).getDelayedEmails();
     }
     @Override
-    public void delete(Long id) throws MyDeleteException {
+    public void deleteSoft(Long id) throws MyDeleteException {
         User user = repository.findById(id).orElseThrow(
                 () -> new NotFoundException("Пользователя с заданным ID=" + id + " не существует"));
         markAsDeleted(user);
